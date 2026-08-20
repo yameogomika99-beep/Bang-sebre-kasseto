@@ -1,0 +1,209 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Recherche Résultats BAC Technique - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#006b2f",
+                    "secondary": "#bb0014",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00873d",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200">
+    <div class="flex justify-between items-center px-sm md:px-gutter py-base max-w-container-max mx-auto h-16">
+        <div class="flex items-center gap-xs cursor-pointer" onclick="window.location.href='index.html'">
+            <span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
+            <span class="font-headline-md text-headline-md text-primary font-bold flex items-center gap-1">Bângr-sebre <span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1;">star</span> kaseto</span>
+        </div>
+        <nav class="hidden md:flex gap-md h-full items-center">
+            <a class="font-label-md text-label-md transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low py-2 px-1 rounded-sm" href="index.html">Accueil</a>
+            <a class="font-label-md text-label-md transition-colors duration-200 text-primary border-b-2 border-primary py-2 px-1" href="Recherche.html">Recherche</a>
+            <a class="font-label-md text-label-md transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low py-2 px-1 rounded-sm" href="Statistiques.html">Statistiques</a>
+            <a class="font-label-md text-label-md transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low py-2 px-1 rounded-sm" href="FAQ.html">FAQ</a>
+        </nav>
+        <a class="font-label-md text-label-md transition-colors duration-200 text-on-surface-variant hover:bg-surface-container-low py-2 px-1 rounded-sm" href="Verification.html">Vérification</a>
+        <div class="flex items-center gap-sm" id="header-auth-container">
+            <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">language</button>
+            <button onclick="window.location.href='Connexion.html'" class="bg-primary text-on-primary px-sm py-2 rounded-lg font-label-md hover:bg-primary-container transition-all flex items-center gap-base">
+                <span class="material-symbols-outlined text-lg">login</span>
+                Se connecter
+            </button>
+        </div>
+    </div>
+</header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter">
+<div class="absolute inset-0 faso-dan-fani-bg pointer-events-none"></div>
+<div class="relative z-10 w-full max-w-4xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Résultats BAC Technique</h1>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Consultez votre résultat au Baccalauréat Technique.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl">
+<form class="space-y-md" id="searchForm">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="year">Année de Session</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" id="year">
+<option value="2024" disabled>Session 2024 (Non disponible)</option>
+<option value="2025" selected>Session 2025</option>
+<option value="2026" disabled>Session 2026 (À venir)</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-3 pointer-events-none text-on-surface-variant" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="pv_number">N° de Table</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline" id="pv_number" placeholder="Ex: 00012345Z" type="text" required="">
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant" data-icon="fingerprint">fingerprint</span>
+</div>
+<p class="text-error text-label-sm mt-xs hidden" id="pv_number_error">Veuillez saisir votre numéro de table.</p>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="cnib_number">N° CNIB</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline" id="cnib_number" placeholder="Ex: B1234567" type="text" required="">
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant" data-icon="badge">badge</span>
+</div>
+<p class="text-error text-label-sm mt-xs hidden" id="cnib_number_error">Veuillez saisir votre numéro CNIB.</p>
+</div>
+<div class="pt-base">
+<button class="w-full h-12 bg-primary text-on-primary font-label-md rounded-lg hover:bg-primary-container transition-all active:scale-[0.98] flex items-center justify-center gap-sm" id="submit-btn" type="submit">
+<span class="material-symbols-outlined" id="submit-icon">search</span>
+<span id="btn-text">Consulter le résultat</span>
+</button>
+</div>
+</form>
+</div>
+</main>
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest">
+    <div class="max-w-container-max mx-auto px-sm md:px-gutter flex flex-col md:flex-row justify-between items-center gap-sm">
+        <div class="flex flex-col gap-xs items-center md:items-start">
+            <div class="text-label-md font-bold text-on-surface">Direction des Examens et Concours</div>
+            <p class="font-body-md text-label-sm text-on-surface-variant">© 2024 Gouvernement du Burkina Faso - Direction des Examens et Concours</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-md">
+            <a class="font-body-md text-label-sm text-on-surface-variant hover:text-secondary transition-all" href="FAQ.html">Mentions Légales</a>
+            <a class="font-body-md text-label-sm text-on-surface-variant hover:text-secondary transition-all" href="FAQ.html#contact">Contact</a>
+            <a class="font-body-md text-label-sm text-on-surface-variant hover:text-secondary transition-all" href="FAQ.html">Protection des données</a>
+            <a class="font-body-md text-label-sm text-on-surface-variant hover:text-secondary transition-all" href="https://www.sig.gov.bf/" target="_blank">SIG Burkina</a>
+        </div>
+    </div>
+</footer>
+<button id="back-to-top" class="fixed bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible z-50 hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
+    <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<script>
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm">
+    <a href="index.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label-sm text-label-sm">Accueil</span>
+    </a>
+    <a href="Recherche.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform active:scale-90">
+        <span class="material-symbols-outlined">search</span>
+        <span class="font-label-sm text-label-sm">Recherche</span>
+    </a>
+    <a href="Statistiques.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">description</span>
+        <span class="font-label-sm text-label-sm">Résultats</span>
+    </a>
+    <a href="Verification.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">verified</span>
+        <span class="font-label-sm text-label-sm">Vérifier</span>
+    </a>
+    <a href="FAQ.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">help_outline</span>
+        <span class="font-label-sm text-label-sm">FAQ</span>
+    </a>
+</nav>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const pv = document.getElementById('pv_number').value;
+        sessionStorage.setItem('selectedExam', 'BAC_TECH');
+        sessionStorage.setItem('simulatedMatricule', pv);
+        sessionStorage.setItem('quickCheck', 'true');
+        window.location.href = 'Resultat_BAC.html';
+    });
+
+    // Gestion dynamique de l'authentification
+    document.addEventListener('DOMContentLoaded', () => {
+        const authContainer = document.getElementById('header-auth-container');
+        if (authContainer && sessionStorage.getItem('isLoggedIn') === 'true') {
+            const candidate = JSON.parse(sessionStorage.getItem('candidateDetails') || '{}');
+            authContainer.innerHTML = `
+                <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full">language</button>
+                <div class="flex items-center gap-xs bg-surface-container-low px-3 py-2 rounded-full border border-outline-variant cursor-pointer hover:bg-surface-container-highest transition-colors" onclick="window.location.href='Mes%20Resultats.html'">
+                    <span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+                    <span class="font-label-md text-on-surface">${candidate.name || 'Mon Espace'}</span>
+                </div>
+                <button onclick="sessionStorage.clear(); window.location.href='index.html'" class="p-2 text-secondary hover:bg-red-50 rounded-full transition-colors" title="Déconnexion">
+                    <span class="material-symbols-outlined">logout</span>
+                </button>
+            `;
+        } else {
+            authContainer.innerHTML = `
+                <button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">language</button>
+                <button onclick="window.location.href='Connexion.html'" class="bg-primary text-on-primary px-sm py-2 rounded-lg font-label-md hover:bg-primary-container transition-all flex items-center gap-base">
+                    <span class="material-symbols-outlined text-lg">login</span>
+                    Se connecter
+                </button>
+            `;
+        }
+    });
+</script>
+</body></html>

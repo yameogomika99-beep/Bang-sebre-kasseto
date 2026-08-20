@@ -1,0 +1,159 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Résultat de Vérification - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#006b2f",
+                    "secondary": "#bb0014",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00873d",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter">
+<div class="relative z-10 w-full max-w-4xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs" id="verification-status-title">Résultat de la Vérification</h1>
+<p class="text-on-surface-variant mx-auto font-body-md" id="verification-status-message">Veuillez patienter pendant la vérification de l'authenticité du document.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl" id="verification-details-card">
+<div class="flex flex-col items-center justify-center py-lg">
+<span class="material-symbols-outlined text-6xl text-primary animate-spin" id="verification-icon">sync</span>
+<p class="font-label-md text-on-surface mt-md">Vérification en cours...</p>
+</div>
+</div>
+<div class="flex justify-center mt-lg">
+<a href="Verification.html" class="bg-primary text-on-primary px-lg py-3 rounded-lg font-label-md hover:bg-primary-container transition-all flex items-center gap-sm">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Nouvelle Vérification
+</a>
+</div>
+</div>
+</main>
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const verifiedMatricule = sessionStorage.getItem('verifiedMatricule');
+        const verifiedExam = sessionStorage.getItem('verifiedExam');
+        const verifiedYear = sessionStorage.getItem('verifiedYear');
+        const verifiedCVU = sessionStorage.getItem('verifiedCVU');
+        const verificationStatus = sessionStorage.getItem('verificationStatus');
+
+        const statusTitle = document.getElementById('verification-status-title');
+        const statusMessage = document.getElementById('verification-status-message');
+        const detailsCard = document.getElementById('verification-details-card');
+        const verificationIcon = document.getElementById('verification-icon');
+
+        if (verificationStatus === 'success') {
+            statusTitle.textContent = "Diplôme Authentifié !";
+            statusMessage.textContent = "Le document présenté est authentique et valide.";
+            verificationIcon.classList.remove('animate-spin', 'text-primary');
+            verificationIcon.classList.add('text-green-600'); // Tailwind green color
+            verificationIcon.textContent = 'check_circle';
+
+            detailsCard.innerHTML = `
+                <div class="space-y-md">
+                    <div class="flex justify-between items-center py-base border-b border-outline-variant">
+                        <span class="text-on-surface-variant text-label-sm">Examen</span>
+                        <span class="font-label-md">${verifiedExam}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-base border-b border-outline-variant">
+                        <span class="text-on-surface-variant text-label-sm">Année de Session</span>
+                        <span class="font-label-md">${verifiedYear}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-base border-b border-outline-variant">
+                        <span class="text-on-surface-variant text-label-sm">Matricule / N° de Table</span>
+                        <span class="font-label-md">${verifiedMatricule}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-base border-b border-outline-variant">
+                        <span class="text-on-surface-variant text-label-sm">Code de Vérification Unique (CVU)</span>
+                        <span class="font-label-md">${verifiedCVU}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-base">
+                        <span class="text-on-surface-variant text-label-sm">Nom du Candidat</span>
+                        <span class="font-label-md font-bold">TRAORÉ Fatimata</span> <!-- Simulated name -->
+                    </div>
+                </div>
+            `;
+        } else if (verificationStatus === 'failed') {
+            statusTitle.textContent = "Diplôme Non Reconnu";
+            statusMessage.textContent = "Les informations fournies ne correspondent à aucun diplôme enregistré dans notre base de données officielle.";
+            verificationIcon.classList.remove('animate-spin', 'text-primary');
+            verificationIcon.classList.add('text-red-600'); // Tailwind red color
+            verificationIcon.textContent = 'report';
+
+            detailsCard.innerHTML = `
+                <div class="text-center py-lg">
+                    <p class="font-label-md text-secondary font-bold text-lg mb-md">Avertissement : Document non répertorié</p>
+                    <p class="text-on-surface-variant text-sm mt-sm max-w-md mx-auto leading-relaxed">Le diplôme recherché ne se trouve pas dans la base de données officielle du MENAPLN. En l'état actuel, le système ne dispose d'aucune information permettant d'attester de la crédibilité ou de l'authenticité de ce document.</p>
+                </div>
+            `;
+        } else {
+            // Default state if no verification was performed (e.g., direct access)
+            statusTitle.textContent = "Accès Invalide";
+            statusMessage.textContent = "Veuillez passer par le formulaire de vérification pour authentifier un document.";
+            verificationIcon.classList.remove('animate-spin', 'text-primary');
+            verificationIcon.classList.add('text-red-600');
+            verificationIcon.textContent = 'error';
+            detailsCard.innerHTML = `
+                <div class="text-center py-lg">
+                    <p class="font-label-md text-on-surface">Aucune donnée de vérification trouvée.</p>
+                    <a href="Verification.html" class="bg-primary text-on-primary px-lg py-3 rounded-lg font-label-md hover:bg-primary-container transition-all flex items-center gap-sm mt-md mx-auto w-fit">
+                        <span class="material-symbols-outlined text-lg">verified</span>
+                        Commencer une vérification
+                    </a>
+                </div>
+            `;
+        }
+        // Clear verification status from session storage after displaying
+        sessionStorage.removeItem('verifiedMatricule');
+        sessionStorage.removeItem('verifiedExam');
+        sessionStorage.removeItem('verifiedYear');
+        sessionStorage.removeItem('verifiedCVU');
+        sessionStorage.removeItem('verificationStatus');
+
+    });
+</script>
+</body></html>

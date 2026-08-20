@@ -1,0 +1,218 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Résultat CEP 2025 - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<div class="watermark-print"><span>PROVISOIRE</span></div>
+<div class="matricule-watermark-print"><span id="footer-matricule"></span></div>
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+
+<main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-gutter py-lg">
+    <!-- Result Banner -->
+    <section class="mb-lg no-print">
+        <div class="bg-primary-container text-on-primary-container p-md rounded-xl flex items-center gap-md shadow-sm border border-primary/20">
+            <div class="bg-white/20 p-sm rounded-full">
+                <span class="material-symbols-outlined text-4xl" id="status-icon">check_circle</span>
+            </div>
+            <div class="flex-grow">
+                <h2 class="font-headline-lg text-headline-lg" id="status-text">ADMIS(E)</h2>
+                <p class="font-body-md opacity-90" id="session-label">Session Normale - 2025</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="result-content" class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <!-- Sidebar Candidat -->
+        <aside class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm h-fit">
+            <div class="flex flex-col items-center mb-md pb-md border-b border-outline-variant">
+                <img id="cand-photo" src="https://api.dicebear.com/8.x/initials/svg?seed=Candidat" class="w-32 h-32 rounded-lg object-cover border-2 border-primary mb-sm shadow-md" alt="Photo Candidat">
+                <h2 id="cand-name" class="font-headline-md text-primary text-center"></h2>
+                <p id="cand-matricule" class="text-on-surface-variant font-label-md"></p>
+            </div>
+            <div class="space-y-sm text-body-md">
+                <div class="flex justify-between"><span>Date de naissance :</span><span id="cand-birthdate" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Lieu de naissance :</span><span id="cand-place" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Établissement :</span><span id="cand-school" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Mention :</span><span id="cand-mention" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Décision :</span><span id="cand-status" class="font-bold"></span></div>
+            </div>
+            <button id="print-btn" class="no-print w-full mt-lg bg-primary text-on-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary-container transition-all duration-200">
+                <span class="material-symbols-outlined">print</span> Imprimer l'Attestation
+            </button>
+            <button id="download-pdf-btn" class="no-print w-full mt-sm border border-primary text-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary/5 transition-all duration-200">
+                <span class="material-symbols-outlined">download</span> Télécharger en PDF
+            </button>
+        </aside>
+
+        <!-- Relevé de notes -->
+        <div class="lg:col-span-8 space-y-md">
+            <div class="bg-primary/5 border border-primary/20 p-md rounded-xl">
+                <h1 class="text-headline-md font-bold text-primary flex items-center gap-sm"> 
+                    <span class="material-symbols-outlined">school</span> <span id="exam-title-display"></span> - <span id="session-year-display"></span>
+                </h1>
+            </div>
+            
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-md py-sm border-b border-outline-variant text-label-sm uppercase">Matière</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-center text-label-sm uppercase">Coeff</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-center text-label-sm uppercase">Note /20</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-right text-label-sm uppercase">Pondérée</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notes-body" class="divide-y divide-outline-variant"></tbody>
+                    <tfoot class="bg-surface-container-low font-bold">
+                        <tr>
+                            <td class="px-md py-md">TOTAL GÉNÉRAL</td>
+                            <td class="text-center" id="total-coeff"></td>
+                            <td class="px-md py-md text-center">--</td>
+                            <td class="px-md py-md text-right text-primary" id="total-points"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="p-sm bg-surface-container-highest text-center text-[10px] text-on-surface-variant uppercase tracking-widest" id="total-points-max-label"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+
+<script src="script.js"></script>
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const matricule = sessionStorage.getItem('simulatedMatricule') || "PV-CEP-8832";
+        
+        const cepData = {
+            name: "OUÉDRAOGO Aminata",
+            matricule: matricule,
+            birthdate: "05 Mars 2013",
+            place: "Ouagadougou (Kadiogo)",
+            school: "École Primaire Publique Goughin B",
+            mention: "TRÈS BIEN",
+            status: "ADMIS(E)",
+            subjects: [
+                { name: "Français (Dictée/Texte)", coeff: 2, note: 16.5, total: 33 },
+                { name: "Mathématiques (Calcul)", coeff: 2, note: 18, total: 36 },
+                { name: "Étude de Milieu (Sciences)", coeff: 1, note: 15, total: 15 },
+                { name: "Histoire-Géo", coeff: 1, note: 14, total: 14 },
+                { name: "Dessin/Couture", coeff: 1, note: 17, total: 17 }
+            ],
+            totalPoints: 115,
+            totalCoeff: 7,
+            maxPoints: 140
+        };
+
+        document.getElementById('cand-name').textContent = cepData.name;
+        document.getElementById('cand-matricule').textContent = cepData.matricule;
+        document.getElementById('cand-birthdate').textContent = cepData.birthdate;
+        document.getElementById('cand-place').textContent = cepData.place;
+        document.getElementById('cand-school').textContent = cepData.school;
+        document.getElementById('cand-mention').textContent = cepData.mention;
+        document.getElementById('cand-status').textContent = cepData.status;
+        document.getElementById('cand-status').className = "font-bold text-primary";
+
+        document.getElementById('exam-title-display').textContent = "CEP";
+        document.getElementById('session-year-display').textContent = "2025";
+
+        const notesBody = document.getElementById('notes-body');
+        notesBody.innerHTML = cepData.subjects.map(s => `
+            <tr class="hover:bg-surface-container-lowest transition-colors">
+                <td class="px-md py-md font-label-md">${s.name}</td>
+                <td class="px-md py-md text-center">${s.coeff}</td>
+                <td class="px-md py-md text-center">${s.note.toFixed(2)}</td>
+                <td class="px-md py-md text-right font-bold">${s.total.toFixed(2)}</td>
+            </tr>
+        `).join('');
+
+        document.getElementById('total-coeff').textContent = cepData.totalCoeff;
+        document.getElementById('total-points').textContent = cepData.totalPoints.toFixed(2);
+        document.getElementById('total-points-max-label').textContent = `TOTAL : ${cepData.totalPoints} / ${cepData.maxPoints}`;
+        document.getElementById('footer-matricule').textContent = cepData.matricule;
+        document.getElementById('cand-photo').src = `https://api.dicebear.com/8.x/initials/svg?seed=${cepData.name}`;
+
+        document.getElementById('print-btn').addEventListener('click', () => window.print());
+        document.getElementById('download-pdf-btn').addEventListener('click', () => {
+            const element = document.querySelector('main');
+            html2pdf().set({
+                margin: 10,
+                filename: `CEP_2025_${cepData.matricule}.pdf`,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(element).save();
+        });
+    });
+</script>
+<button id="back-to-top" class="fixed bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible z-50 hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
+    <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<script>
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) { // Show button after scrolling 300px
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scroll to top
+        });
+    });
+</script>
+</body></html>

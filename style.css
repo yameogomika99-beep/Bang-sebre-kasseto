@@ -1,0 +1,122 @@
+/* Base & Typography */
+body {
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Material Symbols Global Configuration */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+/* Background Patterns */
+.faso-pattern {
+    background-image: radial-gradient(var(--tw-colors-outline-variant) 0.5px, transparent 0.5px);
+    background-size: 24px 24px;
+    opacity: 0.1;
+}
+
+.faso-dan-fani-bg, .bg-fano-pattern {
+    background-image: radial-gradient(circle at 2px 2px, #bdcaba 1px, transparent 0);
+    background-size: 24px 24px;
+    opacity: 0.15;
+}
+
+/* UI Elements & Shadows */
+.institution-gradient {
+    background: linear-gradient(135deg, #009739 0%, #00ad43 100%);
+}
+
+.shadow-soft, .card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 151, 57, 0.05);
+}
+
+/* Interactive Map (Statistiques) */
+.region-path {
+    transition: all 0.3s ease;
+    stroke: white;
+    stroke-width: 1.5;
+    cursor: pointer;
+}
+
+.region-path:hover {
+    stroke: #009739;
+    stroke-width: 3;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.map-tooltip {
+    position: absolute;
+    z-index: 1000;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #bdcaba;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    display: none;
+}
+
+/* Sceau Officiel Watermark pour l'impression */
+.central-seal-watermark {
+    display: none;
+}
+
+@media print {
+    .central-seal-watermark, .matricule-watermark-print {
+        display: block;
+        position: fixed;
+    }
+    .central-seal-watermark {
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 450px; opacity: 0.05; z-index: -10; pointer-events: none;
+    }
+    .matricule-watermark-print {
+        bottom: 20mm; right: 10mm; font-size: 10pt; color: #ccc; opacity: 0.5;
+    }
+    /* Désactiver les ombres pour une impression plus nette */
+    .shadow-sm, .shadow-md, .shadow-lg, .shadow-glass { box-shadow: none !important; border: 1px solid #eee !important; }
+    body { background-color: white !important; }
+}
+
+@keyframes bestRegionPulse {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+    100% { filter: brightness(1); }
+}
+.best-region-pulse {
+    animation: bestRegionPulse 2s infinite ease-in-out;
+}
+
+/* FAQ Accordion */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 500px;
+}
+
+.accordion-item.active .chevron-icon {
+    transform: rotate(180deg);
+}
+
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

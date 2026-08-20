@@ -1,0 +1,337 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Résultats BAC 2025 - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<div class="watermark-print"><span>PROVISOIRE</span></div>
+<div class="matricule-watermark-print"><span id="footer-matricule"></span></div>
+<!-- Sceau central pour l'impression -->
+<div class="central-seal-watermark">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Coat_of_arms_of_Burkina_Faso.svg/500px-Coat_of_arms_of_Burkina_Faso.svg.png" alt="Armoiries Burkina Faso">
+</div>
+
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+
+<main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-gutter py-lg">
+    <!-- Result Banner -->
+    <section class="mb-lg animate-fade-in no-print">
+        <div class="bg-primary-container text-on-primary-container p-md md:p-lg rounded-2xl flex flex-col md:flex-row items-center gap-md shadow-glass border border-primary/20">
+            <div class="bg-white/20 p-sm rounded-full">
+                <span class="material-symbols-outlined text-4xl" id="status-icon">sync</span>
+            </div>
+            <div class="flex-grow">
+                <h2 class="font-headline-lg text-headline-lg" id="status-text">CHARGEMENT...</h2>
+                <p class="font-body-md opacity-90" id="session-label">Session en cours de récupération</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 space-y-md">
+            <div class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm">
+                <div class="flex flex-col items-center mb-md pb-md border-b border-outline-variant">
+                    <img id="cand-photo" src="https://api.dicebear.com/8.x/initials/svg?seed=Candidat" class="w-32 h-32 rounded-lg object-cover border-2 border-primary mb-sm shadow-md" alt="Photo">
+                    <h3 id="cand-name" class="font-headline-md text-primary text-center"></h3>
+                    <p id="cand-matricule" class="text-on-surface-variant font-label-md"></p>
+                </div>
+                <div class="space-y-sm text-body-md">
+                    <div class="flex justify-between"><span>Date de naissance :</span><span id="cand-birthdate" class="font-bold"></span></div>
+                    <div class="flex justify-between"><span>Établissement :</span><span id="cand-school" class="font-bold"></span></div>
+                    <div class="flex justify-between"><span>Série :</span><span id="cand-series" class="font-bold"></span></div>
+                    <div class="flex justify-between"><span>Mention :</span><span id="cand-mention" class="font-bold text-primary"></span></div>
+                    <div class="flex justify-between"><span>Lieu :</span><span id="cand-place" class="font-bold"></span></div>
+                    <div class="flex justify-between"><span>Jury :</span><span id="cand-jury" class="font-bold"></span></div>
+                </div>
+            </div>
+            <button id="print-btn" data-html2canvas-ignore="true" class="no-print w-full bg-primary text-on-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary-container transition-all duration-200">
+                <span class="material-symbols-outlined">print</span> Imprimer le Relevé
+            </button>
+            <button id="download-pdf-btn" data-html2canvas-ignore="true" class="no-print w-full mt-sm border border-primary text-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary/5 transition-all duration-200">
+                <span class="material-symbols-outlined">download</span> Télécharger en PDF
+            </button>
+        </aside>
+
+        <!-- Detailed Results -->
+        <div class="lg:col-span-8 space-y-md" id="detailed-results-section">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+                <div class="p-md bg-surface-container-low border-b border-outline-variant flex justify-between items-center section-header-print">
+                    <h4 class="font-headline-md flex items-center gap-xs"> 
+                        <span class="material-symbols-outlined">assignment</span> <span id="exam-title-display"></span> - <span id="session-year-display"></span>
+                    </h4>
+                    <div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label-sm font-bold" id="overall-avg"></div>
+                </div>
+                
+                <div id="performance-radar-container" class="p-md border-b border-outline-variant no-print">
+                    <div class="w-full max-w-sm mx-auto h-64">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-md py-sm text-label-sm uppercase">Matière</th>
+                            <th class="px-md py-sm text-label-sm text-center uppercase">Coeff</th>
+                            <th class="px-md py-sm text-label-sm text-center uppercase">Note</th>
+                            <th class="px-md py-sm text-label-sm text-right uppercase">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notes-body" class="divide-y divide-outline-variant"></tbody>
+                    <tfoot class="bg-surface-container-low font-bold">
+                        <tr>
+                            <td class="px-md py-md">TOTAL GÉNÉRAL</td>
+                            <td class="text-center" id="total-coeff"></td>
+                            <td class="text-center">--</td>
+                            <td class="px-md py-md text-right text-primary" id="total-points"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="p-sm bg-surface-container-highest text-center text-[10px] text-on-surface-variant uppercase tracking-widest" id="total-points-max-label"></div>
+            </div>
+
+            <div class="mt-md flex flex-col items-center justify-center p-md bg-secondary/5 border border-secondary/10 rounded-xl relative overflow-hidden">
+                <div class="absolute right-0 top-0 opacity-10">
+                    <span class="material-symbols-outlined text-9xl">shield_person</span>
+                </div>
+                <p class="text-label-sm text-center max-w-lg mb-md text-on-surface-variant italic">
+                    Document provisoire. La réussite définitive est attestée par le diplôme officiel. 
+                    L'authenticité peut être vérifiée sur le portail Bângr-sebre kaseto.
+                </p>
+                <div class="text-center relative z-10">
+                    <p class="text-label-sm font-bold border-b border-outline-variant mb-sm pb-base uppercase">Le Directeur des Examens et Concours</p>
+                    <img alt="Signature" class="h-14 mx-auto grayscale mix-blend-multiply opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7AhwY0LG0azLWURPC04gYmX_enFE5s_sPtrqAJKjhJSeRQ8jHzN0ENxxToQHpL3VvadLN0RPXZ5xLv5PZ2TUSGgkuVvOSKOqQM6lisk4RioMhd2-gl3nTEGrz2S3dx-PXF0Abgf_SH45HLm5dSpINRD9mixF_n7mS3XaWB-Xyu2DrYTmL8wNHDpdFTxmlpRvfhHqt7YLCpXUqaV_qFPqgk54P6qzA9sbK3BC5OjFWqjluQbVdOHhNyoTg1c4SDGAHJHwC4vE84XU">
+                    <div class="text-[9px] text-on-surface-variant mt-2 font-mono bg-white/50 px-2 py-0.5 rounded border border-outline-variant/20 inline-block">
+                        SIGNÉ NUMÉRIQUEMENT LE : <span id="current-date-signature"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+    <footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+
+<script src="script.js"></script>
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const matricule = sessionStorage.getItem('simulatedMatricule') || "PV-25-09481D";
+        const selectedExam = sessionStorage.getItem('selectedExam') || 'BAC';
+
+        let realData;
+
+        if (selectedExam === 'BAC_TECH') {
+            // Données spécifiques pour le BAC Technique (Série F4)
+            realData = {
+                name: "COULIBALY Moussa",
+                matricule: matricule,
+                birthdate: "22 Juin 2005",
+                school: "Lycée Technique National",
+                series: "Série F4 (Génie Civil)",
+                mention: "ASSEZ BIEN",
+                place: "Ouagadougou (Kadiogo)",
+                jury: "Jury 158 - Lycée Technique",
+                avg: "12.85",
+                subjects: [
+                    { name: "Philosophie", coeff: 2, note: 10, total: 20 },
+                    { name: "Français", coeff: 3, note: 11, total: 33 },
+                    { name: "Anglais", coeff: 2, note: 13, total: 26 },
+                    { name: "Mathématiques", coeff: 4, note: 14, total: 56 },
+                    { name: "Physique-Chimie", coeff: 4, note: 12, total: 48 },
+                    { name: "Étude Industrielle", coeff: 5, note: 15, total: 75 },
+                    { name: "Technologie", coeff: 4, note: 14, total: 56 },
+                    { name: "EPS", coeff: 1, note: 16, total: 16 }
+                ],
+                totalPoints: 330,
+                totalCoeff: 25,
+                maxPoints: 500
+            };
+        } else {
+            // Données pour le BAC Général (Série D)
+            realData = {
+                name: "ZONGO Abdoul-Aziz Kader",
+                matricule: matricule,
+                birthdate: "14 Mai 2006",
+                school: "Lycée Mixte d'Excellence",
+                series: "Série D (Scientifique)",
+                mention: "BIEN",
+                place: "Ouagadougou (Kadiogo)",
+                jury: "Jury 112 - Gounghin",
+                avg: "14.58",
+                subjects: [
+                    { name: "Philosophie", coeff: 2, note: 11, total: 22 },
+                    { name: "Français", coeff: 3, note: 14, total: 42 },
+                    { name: "Anglais", coeff: 2, note: 15.5, total: 31 },
+                    { name: "Histoire-Géo", coeff: 2, note: 12, total: 24 },
+                    { name: "Mathématiques", coeff: 5, note: 16, total: 80 },
+                    { name: "Physique-Chimie", coeff: 5, note: 15.5, total: 77.5 },
+                    { name: "SVT", coeff: 5, note: 14, total: 70 },
+                    { name: "EPS", coeff: 1, note: 18, total: 18 }
+                ],
+                totalPoints: 364.5,
+                totalCoeff: 25,
+                maxPoints: 500
+            };
+        }
+
+        // Mise à jour de l'interface
+        document.getElementById('status-text').textContent = "FÉLICITATIONS ! ADMIS(E)";
+        document.getElementById('status-icon').textContent = "check_circle";
+        document.getElementById('session-label').textContent = "Session Normale - " + (selectedExam === 'BAC_TECH' ? 'BAC Technique' : 'BAC') + " 2025";
+
+        document.getElementById('cand-name').textContent = realData.name;
+        document.getElementById('cand-matricule').textContent = realData.matricule;
+        document.getElementById('cand-birthdate').textContent = realData.birthdate;
+        document.getElementById('cand-school').textContent = realData.school;
+        document.getElementById('cand-series').textContent = realData.series;
+        document.getElementById('cand-mention').textContent = realData.mention;
+        document.getElementById('cand-place').textContent = realData.place;
+        document.getElementById('cand-jury').textContent = realData.jury;
+
+        document.getElementById('exam-title-display').textContent = selectedExam === 'BAC_TECH' ? 'BAC Technique' : 'BAC';
+        document.getElementById('session-year-display').textContent = "2025";
+        document.getElementById('overall-avg').textContent = "MOYENNE : " + realData.avg + "/20";
+
+        const notesBody = document.getElementById('notes-body');
+        notesBody.innerHTML = '';
+        realData.subjects.forEach(s => {
+            const row = `
+                <tr class="hover:bg-surface-container-lowest transition-colors">
+                    <td class="px-md py-md font-label-md">${s.name}</td>
+                    <td class="px-md py-md text-center">${s.coeff}</td>
+                    <td class="px-md py-md text-center">${s.note.toFixed(2)}</td>
+                    <td class="px-md py-md text-right font-bold">${s.total.toFixed(2)}</td>
+                </tr>
+            `;
+            notesBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        document.getElementById('total-coeff').textContent = realData.totalCoeff;
+        document.getElementById('total-points').textContent = realData.totalPoints.toFixed(2);
+        document.getElementById('total-points-max-label').textContent = `TOTAL DES POINTS : ${realData.totalPoints.toFixed(2)} SUR ${realData.maxPoints}`;
+        
+        // Footer matricule pour l'impression
+        document.getElementById('footer-matricule').textContent = realData.matricule;
+        document.getElementById('cand-photo').src = `https://api.dicebear.com/8.x/initials/svg?seed=${realData.name}`;
+
+        // Horodatage de la signature
+        const now = new Date();
+        document.getElementById('current-date-signature').textContent = now.toLocaleDateString('fr-FR', {
+            day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        }).toUpperCase();
+
+        // Logique Impression et PDF
+        document.getElementById('print-btn').addEventListener('click', () => window.print());
+        document.getElementById('download-pdf-btn').addEventListener('click', () => {
+            const element = document.querySelector('main');
+            const opt = {
+                margin: 10,
+                filename: `BAC_2025_${realData.matricule}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save().then(() => {
+                if (typeof showToast === 'function') showToast("Téléchargement lancé.");
+            });
+        });
+
+        // Initialisation explicite du graphique Radar pour le BAC
+        const radarCanvas = document.getElementById('radarChart');
+        if (radarCanvas) {
+            new Chart(radarCanvas, {
+                type: 'radar',
+                data: {
+                    labels: realData.subjects.map(s => s.name),
+                    datasets: [{
+                        label: 'Points par Matière',
+                        data: realData.subjects.map(s => s.note),
+                        backgroundColor: 'rgba(0, 151, 57, 0.2)',
+                        borderColor: '#009739',
+                        pointBackgroundColor: '#009739',
+                        pointBorderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: { r: { suggestedMin: 0, suggestedMax: 20, ticks: { stepSize: 5 } } },
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+    });
+</script>
+<button id="back-to-top" class="fixed bottom-20 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible z-50 hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
+    <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<script>
+    // Back to Top Button Logic
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) { // Show button after scrolling 300px
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scroll to top
+        });
+    });
+</script>
+</body></html>

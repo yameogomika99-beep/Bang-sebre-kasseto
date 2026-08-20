@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Statistiques Nationales - Bângr-sebre kaseto</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b",
+                        "on-surface-variant": "#3e4a3e",
+                        "outline-variant": "#bdcaba",
+                        "surface-container-low": "#f6f3f2",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#f7fff3"
+                    },
+                    spacing: {
+                        "lg": "40px",
+                        "gutter": "20px",
+                        "container-max": "1200px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "xl": "64px",
+                        "sm": "16px",
+                        "base": "4px"
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+    <header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+
+    <main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-gutter py-xl">
+        <div class="text-center mb-xl">
+            <h1 class="font-display-lg text-display-lg text-primary mb-xs">Performances Nationales</h1>
+            <p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Analyse des performances par région et par session d'examen.</p>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="flex flex-col sm:flex-row gap-md mb-xl justify-center items-center bg-white p-4 rounded-2xl border border-outline-variant shadow-soft no-print">
+            <div class="flex items-center gap-sm w-full sm:w-auto">
+                <label for="filter-exam" class="font-bold text-xs uppercase text-on-surface-variant whitespace-nowrap tracking-wider">Examen :</label>
+                <select id="filter-exam" class="flex-grow bg-surface-container-low border border-outline-variant rounded-xl px-4 h-11 focus:ring-2 focus:ring-primary outline-none transition-all font-bold text-on-surface">
+                    <option value="CEP">CEP</option>
+                    <option value="BEPC" selected>BEPC</option>
+                    <option value="BAC">BAC</option>
+                    <option value="BAC_TECH">BAC Technique</option>
+                    <option value="CONCOURS">Concours</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-sm w-full sm:w-auto">
+                <label for="filter-year" class="font-bold text-xs uppercase text-on-surface-variant whitespace-nowrap tracking-wider">Année :</label>
+                <select id="filter-year" class="flex-grow bg-surface-container-low border border-outline-variant rounded-xl px-4 h-11 focus:ring-2 focus:ring-primary outline-none transition-all font-bold text-on-surface">
+                    <option value="2024" disabled>2024 (Non disponible)</option>
+                    <option value="2025" selected>2025</option>
+                    <option value="2026" disabled>2026 (À venir)</option>
+                </select>
+            </div>
+            <button id="apply-filters" class="w-full sm:w-auto bg-primary text-on-primary px-8 h-11 rounded-xl font-bold hover:shadow-glass transition-all flex items-center justify-center gap-xs active:scale-95">
+                <span class="material-symbols-outlined text-xl">refresh</span> Actualiser
+            </button>
+        </div>
+
+        <!-- Key Performance Indicators (Cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md mb-xl">
+            <div class="bg-surface-container-lowest p-md rounded-2xl border border-outline-variant shadow-soft flex flex-col gap-xs">
+                <span class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest">Inscrits <span class="stat-title-suffix text-[10px] opacity-60"></span></span>
+                <div class="flex items-baseline gap-xs">
+                    <span class="text-3xl font-black text-primary" id="stat-total-reg">0</span>
+                    <span class="material-symbols-outlined text-primary/30" data-icon="groups">groups</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-lowest p-md rounded-2xl border border-outline-variant shadow-soft flex flex-col gap-xs">
+                <span class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest">Réussite <span class="stat-title-suffix text-[10px] opacity-60"></span></span>
+                <div class="flex items-baseline gap-xs">
+                    <span class="text-3xl font-black text-primary" id="stat-avg-rate">0%</span>
+                    <span class="material-symbols-outlined text-primary/30" data-icon="trending_up">trending_up</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-lowest p-md rounded-2xl border border-outline-variant shadow-soft flex flex-col gap-xs">
+                <span class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest">Top Région <span class="stat-title-suffix text-[10px] opacity-60"></span></span>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-primary truncate" id="stat-best-region">-</span>
+                    <span class="text-label-sm text-on-surface-variant">Région en tête</span>
+                </div>
+            </div>
+            <div class="bg-surface-container-lowest p-md rounded-2xl border border-outline-variant shadow-soft flex flex-col gap-xs">
+                <span class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest">Point Faible <span class="stat-title-suffix text-[10px] opacity-60"></span></span>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-secondary truncate" id="stat-lowest-region">-</span>
+                    <span class="text-label-sm text-on-surface-variant">Plus faible taux</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg items-stretch">
+            <!-- Carte Interactive -->
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-md lg:p-lg flex flex-col">
+                <div class="flex justify-between items-start mb-lg">
+                    <h2 class="font-headline-md text-on-surface flex items-center gap-xs uppercase tracking-wider no-print">
+                        <span class="material-symbols-outlined text-primary">map</span> Répartition Géographique
+                    </h2>
+                    <button onclick="window.print()" class="no-print p-2 rounded-lg hover:bg-surface-container-low text-primary transition-colors flex items-center gap-xs font-label-md">
+                        <span class="material-symbols-outlined text-sm">print</span>
+                        Exporter PDF
+                    </button>
+                </div>
+
+                <!-- Légende de la carte -->
+                <div class="flex flex-wrap gap-x-md gap-y-sm mb-lg text-label-sm text-on-surface-variant no-print">
+                    <div class="flex items-center gap-xs">
+                        <span class="w-4 h-4 rounded-full bg-primary"></span> Taux Élevé (≥ 75%)
+                    </div>
+                    <div class="flex items-center gap-xs">
+                        <span class="w-4 h-4 rounded-full bg-[#cca800]"></span> Taux Moyen (65% - 75%)
+                    </div>
+                    <div class="flex items-center gap-xs">
+                        <span class="w-4 h-4 rounded-full bg-secondary"></span> Taux Faible (< 65%)
+                    </div>
+                </div>
+
+                <div id="map-container" class="relative w-full flex-grow aspect-[4/3] flex items-center justify-center bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/30">
+                    <!-- SVG interactif des 13 régions du Burkina Faso -->
+                    <svg viewBox="0 0 800 600" class="w-full h-full p-4 drop-shadow-sm" id="burkina-svg">
+                        <!-- Tracés des régions synchronisés pour un emboîtement parfait -->
+                        <path id="region-sahel" class="region-path" d="M420,145 L460,50 L550,25 L625,50 L655,105 L615,165 L480,185 L420,145 Z" role="button" />
+                        <path id="region-nord" class="region-path" d="M250,190 L290,150 L370,105 L420,145 L415,200 L320,235 L250,190 Z" role="button" />
+                        <path id="region-est" class="region-path" d="M615,165 L655,105 L765,190 L780,265 L725,445 L665,480 L550,420 L570,340 L625,220 L615,165 Z" role="button" />
+                        <path id="region-boucle-du-mouhoun" class="region-path" d="M85,170 L250,190 L320,235 L225,370 L135,370 L65,315 L75,230 L85,170 Z" role="button" />
+                        <path id="region-hauts-bassins" class="region-path" d="M65,315 L135,370 L175,435 L175,500 L90,515 L35,445 L25,395 L65,315 Z" role="button" />
+                        <path id="region-cascades" class="region-path" d="M35,445 L90,515 L125,540 L120,595 L55,585 L25,515 L35,445 Z" role="button" />
+                        <path id="region-sud-ouest" class="region-path" d="M175,500 L270,525 L310,580 L275,605 L145,600 L125,540 L175,500 Z" role="button" />
+                        <path id="region-centre" class="region-path" d="M380,250 L445,250 L445,350 L380,350 L380,250 Z" role="button" />
+                        <path id="region-plateau-central" class="region-path" d="M415,200 L485,200 L485,290 L445,290 L445,250 L380,250 L380,230 L415,200 Z" role="button" />
+                        <path id="region-centre-nord" class="region-path" d="M420,145 L480,185 L625,220 L570,340 L525,290 L485,200 L415,200 L420,145 Z" role="button" />
+                        <path id="region-centre-ouest" class="region-path" d="M320,235 L415,200 L380,230 L380,350 L345,410 L225,370 L320,235 Z" role="button" />
+                        <path id="region-centre-sud" class="region-path" d="M345,410 L445,410 L455,490 L310,525 L310,580 L270,525 L270,465 L345,410 Z" role="button" />
+                        <path id="region-centre-est" class="region-path" d="M485,290 L570,340 L550,420 L455,490 L445,410 L445,350 L485,350 L485,290 Z" role="button" />
+
+                        <!-- Libellés textuels des régions -->
+                        <g class="pointer-events-none fill-white text-[11px] font-bold select-none opacity-80" style="text-shadow: 0 1px 2px rgba(0,0,0,0.4);">
+                            <text x="530" y="100" text-anchor="middle">Sahel</text>
+                            <text x="340" y="170" text-anchor="middle">Nord</text>
+                            <text x="660" y="300" text-anchor="middle">Est</text>
+                            <text x="200" y="280" text-anchor="middle">B. Mouhoun</text>
+                            <text x="110" y="420" text-anchor="middle">H. Bassins</text>
+                            <text x="80" y="520" text-anchor="middle">Cascades</text>
+                            <text x="220" y="560" text-anchor="middle">Sud-Ouest</text>
+                            <text x="412" y="315" text-anchor="middle" class="text-[8px]">Centre</text>
+                            <text x="500" y="240" text-anchor="middle">C-Nord</text>
+                            <text x="310" y="360" text-anchor="middle">C-Ouest</text>
+                            <text x="505" y="410" text-anchor="middle">C-Est</text>
+                            <text x="385" y="480" text-anchor="middle">C-Sud</text>
+                            <text x="432" y="235" text-anchor="middle" class="text-[7px]">P. Central</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <!-- Graphique -->
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-md lg:p-lg flex flex-col">
+                <h2 class="font-headline-md text-on-surface mb-lg flex items-center gap-xs uppercase tracking-wider no-print">
+                    <span class="material-symbols-outlined text-primary">bar_chart</span> Analyse Comparative
+                </h2>
+                <div class="flex-grow min-h-[400px]">
+                    <canvas id="successRateChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau détaillé des régions -->
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl mt-lg">
+            <h2 class="font-headline-md text-on-surface mb-md flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary">table_chart</span> Détail Analytique par Région
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-md py-3 text-label-sm uppercase tracking-wider border-b border-outline-variant">Région</th>
+                            <th class="px-md py-3 text-label-sm text-center uppercase tracking-wider border-b border-outline-variant">Inscrits</th>
+                            <th class="px-md py-3 text-label-sm text-center uppercase tracking-wider border-b border-outline-variant">Admis</th>
+                            <th class="px-md py-3 text-label-sm text-center uppercase tracking-wider border-b border-outline-variant">Taux de Réussite</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stats-table-body" class="divide-y divide-outline-variant"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+
+    <nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+
+    <script src="components.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartCtx = document.getElementById('successRateChart').getContext('2d');
+            let myChart;
+
+            // Création du tooltip s'il n'existe pas
+            let tooltip = document.querySelector('.map-tooltip');
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.className = 'map-tooltip font-label-sm';
+                document.body.appendChild(tooltip);
+            }
+
+            function updateDashboard() {
+                const exam = document.getElementById('filter-exam').value;
+                const year = document.getElementById('filter-year').value;
+
+                // Mise à jour des titres dynamiques
+                document.querySelectorAll('.stat-title-suffix').forEach(el => el.textContent = `(${exam} ${year})`);
+
+                // Référentiel de poids démographiques approximatifs (poids relatif sur 100)
+                const regionData = [
+                    { name: 'Centre', weight: 22, baseRate: 72 },
+                    { name: 'Hauts-Bassins', weight: 14, baseRate: 68 },
+                    { name: 'Nord', weight: 9, baseRate: 64 },
+                    { name: 'Boucle du Mouhoun', weight: 10, baseRate: 62 },
+                    { name: 'Sahel', weight: 4, baseRate: 55 },
+                    { name: 'Est', weight: 7, baseRate: 58 },
+                    { name: 'Sud-Ouest', weight: 5, baseRate: 60 },
+                    { name: 'Centre-Nord', weight: 8, baseRate: 61 },
+                    { name: 'Centre-Ouest', weight: 9, baseRate: 65 },
+                    { name: 'Centre-Sud', weight: 4, baseRate: 63 },
+                    { name: 'Centre-Est', weight: 5, baseRate: 66 },
+                    { name: 'Plateau-Central', weight: 4, baseRate: 67 },
+                    { name: 'Cascades', weight: 4, baseRate: 64 }
+                ];
+
+                // Amélioration de la graine pour différencier BAC/CEP/BEPC et ajout d'un jitter aléatoire pour le bouton Actualiser
+                const seed = exam.split('').reduce((a, b) => a + b.charCodeAt(0), 0) + parseInt(year);
+                const jitter = Math.random() * 2; // Simulation de micro-variations
+                
+                const stats = regionData.map((rd, i) => {
+                    const yearModifier = (parseInt(year) - 2024) * 2;
+                    const examModifier = (exam === 'BAC' || exam === 'BAC_TECH') ? -10 : (exam === 'CEP' ? 10 : 0);
+                    const rate = Math.min(99, rd.baseRate + yearModifier + examModifier + (seed % 5) + jitter).toFixed(1);
+                    const inscrits = Math.floor((450000 * (rd.weight / 100)) * ((exam === 'BAC' || exam === 'BAC_TECH') ? 0.4 : 1));
+                    const admis = Math.floor(inscrits * (rate / 100));
+                    return { region: rd.name, rate, inscrits, admis };
+                });
+
+                stats.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+
+                // Mise à jour des chiffres clés
+                const totalInscrits = stats.reduce((acc, curr) => acc + curr.inscrits, 0);
+                const avgRate = (stats.reduce((acc, curr) => acc + parseFloat(curr.rate), 0) / stats.length).toFixed(1);
+                
+                document.getElementById('stat-total-reg').textContent = totalInscrits.toLocaleString();
+                document.getElementById('stat-avg-rate').textContent = `${avgRate}%`;
+                document.getElementById('stat-best-region').textContent = `${stats[0].region} (${stats[0].rate}%)`;
+                document.getElementById('stat-lowest-region').textContent = `${stats[stats.length-1].region} (${stats[stats.length-1].rate}%)`;
+
+                // Mise à jour de la CARTE
+                // Retirer les classes de pulsation précédentes
+                document.querySelectorAll('.region-path').forEach(p => p.classList.remove('best-region-pulse'));
+                
+                stats.forEach(s => {
+                    const slug = s.region.toLowerCase().replace(/\s+/g, '-');
+                    const path = document.getElementById(`region-${slug}`);
+                    if (path) {
+                        const color = s.rate >= 75 ? '#009739' : (s.rate >= 65 ? '#cca800' : '#ef2b2d');
+                        path.setAttribute('fill', color);
+                        
+                        // Ajouter l'effet de pulsation pour la meilleure région
+                        if (s.region === stats[0].region) {
+                            path.classList.add('best-region-pulse');
+                        }
+
+                        // Gestion du Tooltip flottant
+                        path.onmouseenter = (e) => {
+                            path.style.filter = 'brightness(1.3)';
+                            tooltip.style.display = 'block';
+                            tooltip.innerHTML = `
+                                <div class="font-bold text-primary border-b border-outline-variant mb-1">${s.region}</div>
+                                <div class="flex justify-between gap-4"><span>Taux:</span> <span class="font-bold text-primary">${s.rate}%</span></div>
+                                <div class="flex justify-between gap-4"><span>Inscrits:</span> <span>${s.inscrits.toLocaleString()}</span></div>
+                                <div class="flex justify-between gap-4"><span>Admis:</span> <span>${s.admis.toLocaleString()}</span></div>
+                            `;
+                        };
+                        path.onmousemove = (e) => {
+                            tooltip.style.left = (e.pageX + 15) + 'px';
+                            tooltip.style.top = (e.pageY + 10) + 'px';
+                        };
+                        path.onmouseleave = () => {
+                            path.style.filter = 'none';
+                            tooltip.style.display = 'none';
+                        };
+                    }
+                });
+
+                // Mise à jour du GRAPHIQUE
+                // Utilisation des couleurs de marque définies
+                const colors = { primary: '#009739', tertiary: '#cca800', secondary: '#ef2b2d' };
+                const backgroundColors = stats.map(s => {
+                    if (s.rate >= 75) {
+                        return colors.primary; // Taux Élevé
+                    } else if (s.rate >= 65) {
+                        return colors.tertiary; // Taux Moyen
+                    } else {
+                        return colors.secondary; // Taux Faible
+                    }
+                });
+                if (myChart) myChart.destroy();
+                myChart = new Chart(chartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: stats.map(s => s.region),
+                        datasets: [{
+                            label: 'Taux de Réussite (%)',
+                            data: stats.map(s => s.rate),
+                            backgroundColor: backgroundColors,
+                            borderColor: backgroundColors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, max: 100, title: { display: true, text: 'Taux (%)' } },
+                            x: { grid: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: (ctx) => `${ctx.raw}%` } }
+                        }
+                    }
+                });
+
+                // Mise à jour du tableau
+                const tableBody = document.getElementById('stats-table-body');
+                tableBody.innerHTML = stats.map(s => `
+                    <tr class="hover:bg-surface-container-low transition-colors duration-200">
+                        <td class="px-md py-4 font-label-md text-on-surface">${s.region}</td>
+                        <td class="px-md py-4 text-center font-body-md">${s.inscrits.toLocaleString()}</td>
+                        <td class="px-md py-4 text-center font-body-md">${s.admis.toLocaleString()}</td>
+                        <td class="px-md py-4 text-center font-bold ${s.rate >= 75 ? 'text-primary' : (s.rate >= 65 ? 'text-[#cca800]' : 'text-secondary')}">${s.rate}%</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Listener pour le bouton Actualiser
+            document.getElementById('apply-filters').addEventListener('click', () => {
+                const btn = document.getElementById('apply-filters');
+                const original = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-lg">sync</span>`;
+                
+                setTimeout(() => {
+                    updateDashboard();
+                    btn.disabled = false;
+                    btn.innerHTML = original;
+                    if (typeof showToast === 'function') showToast("Statistiques actualisées.");
+                }, 600);
+            });
+
+            // Chargement initial
+            updateDashboard();
+        });
+    </script>
+</body>
+</html>

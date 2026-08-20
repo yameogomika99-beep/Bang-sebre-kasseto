@@ -1,0 +1,146 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Connexion Candidat - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#006b2f",
+                        "secondary": "#bb0014",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b",
+                        "on-surface-variant": "#3e4a3e",
+                        "outline-variant": "#bdcaba",
+                        "surface-container-low": "#f6f3f2",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#00873d",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#f7fff3"
+                    },
+                    spacing: {
+                        "lg": "40px",
+                        "gutter": "20px",
+                        "container-max": "1200px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "xl": "64px",
+                        "sm": "16px",
+                        "base": "4px"
+                    },
+                    fontSize: {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter">
+<div class="relative z-10 w-full max-w-2xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Connexion Candidat</h1>
+<p class="text-on-surface-variant mx-auto font-body-md">Connectez-vous pour accéder à votre relevé de notes et votre attestation.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl">
+<form class="space-y-md" id="loginForm">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="pv_number">Matricule ou N° de Table</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none" id="pv_number" placeholder="Ex: 00012345Z" type="text" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">fingerprint</span>
+</div>
+</div>
+<div id="auth-fields" class="space-y-md">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="cnib">N° CNIB</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none" id="cnib" placeholder="Ex: B1234567" type="text" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">badge</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="phone">N° de Téléphone</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none" id="phone" placeholder="Ex: 70000000" type="tel" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">call</span>
+</div>
+</div>
+</div>
+<div class="space-y-md hidden pt-md border-t border-surface-container-highest" id="otp-section">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="otp_code">Code OTP</label>
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm text-center font-bold text-lg" id="otp_code" maxlength="6" placeholder="0 0 0 0 0 0" type="text">
+</div>
+</div>
+<button class="w-full h-12 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-sm mt-md" id="submit-btn" type="submit">
+<span class="material-symbols-outlined" id="submit-icon">sms</span>
+<span id="btn-text">Recevoir le code OTP</span>
+</button>
+</form>
+</div>
+</div>
+</main>
+    <footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script>
+    let isOtpSent = false;
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const icon = document.getElementById('submit-icon');
+        const pv = document.getElementById('pv_number').value.trim();
+
+        if (!isOtpSent) {
+            if (pv === "") { showToast("Veuillez saisir votre matricule."); return; }
+            btn.disabled = true;
+            btnText.innerText = "Envoi...";
+            icon.classList.add('animate-spin'); icon.innerText = "sync";
+            setTimeout(() => {
+                btn.disabled = false; isOtpSent = true;
+                document.getElementById('otp-section').classList.remove('hidden');
+                document.getElementById('auth-fields').classList.add('opacity-50', 'pointer-events-none');
+                btnText.innerText = "Se connecter"; icon.innerText = "login"; icon.classList.remove('animate-spin');
+                showToast("Code OTP envoyé.");
+            }, 1500);
+        } else {
+            const otp = document.getElementById('otp_code').value.trim();
+            if (otp.length < 6) { showToast("Saisissez le code OTP."); return; }
+            btn.disabled = true; btnText.innerText = "Connexion...";
+            setTimeout(() => {
+                const parsed = parseInt(pv, 10);
+                sessionStorage.setItem('userName', 'Candidat Test');
+                sessionStorage.setItem('candidateDetails', JSON.stringify({
+                    name: 'Candidat Test',
+                    matricule: pv,
+                    cnib: 'B1234567',
+                    birthDate: '01 Janvier 2000',
+                    birthPlace: 'Ouagadougou',
+                    email: 'candidat@example.com',
+                    phone: '70000000',
+                    address: 'Quartier, Secteur, Ville'
+                }));
+                if (!isNaN(parsed) && parsed >= 2026 && parsed <= 2050) sessionStorage.setItem('simulatedMatricule', pv);
+                sessionStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'Mes%20Resultats.html';
+            }, 1500);
+        }
+    });
+
+</script>
+</body></html>

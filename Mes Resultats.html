@@ -1,0 +1,128 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mon Espace - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px", "gutter": "20px", "container-max": "1200px", "xs": "8px", "md": "24px", "xl": "64px", "sm": "16px", "base": "4px"
+                },
+                fontSize: {
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+
+<main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-gutter py-lg">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <!-- Sidebar Profil -->
+        <aside class="lg:col-span-4 space-y-md">
+            <div class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm">
+                <div class="flex flex-col items-center mb-md border-b border-surface-container-highest pb-md">
+                    <div id="user-initials-large" class="w-24 h-24 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-3xl shadow-md mb-sm border-4 border-primary/10"></div>
+                    <h3 id="dash-name" class="font-headline-md text-headline-md text-center text-primary"></h3>
+                    <p id="dash-matricule" class="text-on-surface-variant font-label-md"></p>
+                </div>
+                <div class="space-y-sm">
+                    <div class="flex justify-between py-base border-b border-surface-container-low">
+                        <span class="text-on-surface-variant text-label-sm">CNIB</span>
+                        <span id="dash-cnib" class="font-label-md"></span>
+                    </div>
+                    <div class="flex justify-between py-base border-b border-surface-container-low">
+                        <span class="text-on-surface-variant text-label-sm">Date de naissance</span>
+                        <span id="dash-birth" class="font-label-md"></span>
+                    </div>
+                    <div class="flex justify-between py-base">
+                        <span class="text-on-surface-variant text-label-sm">Téléphone</span>
+                        <span id="dash-phone" class="font-label-md"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="sessionStorage.clear(); window.location.href='index.html'" class="w-full py-3 px-4 border border-secondary text-secondary rounded-lg font-bold flex items-center justify-center gap-xs hover:bg-red-50 transition-colors">
+                <span class="material-symbols-outlined">logout</span> Déconnexion
+            </button>
+        </aside>
+
+        <!-- Résultats -->
+        <div class="lg:col-span-8 space-y-md">
+            <div id="results-placeholder" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl text-center">
+                <span class="material-symbols-outlined text-6xl text-outline-variant mb-md">inventory_2</span>
+                <h3 class="font-headline-md mb-xs">Aucun résultat lié</h3>
+                <p class="text-on-surface-variant">Vous n'avez pas encore consulté de résultat pour cette session.</p>
+                <a href="Recherche.html" class="inline-flex items-center gap-xs text-primary font-bold mt-md hover:underline">
+                    Rechercher mon résultat <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+
+            <div id="dashboard-results" class="hidden space-y-md">
+                <div class="bg-primary text-on-primary p-md rounded-xl flex justify-between items-center shadow-md">
+                    <div>
+                        <h2 class="font-headline-md">Session Officielle 2025</h2>
+                        <p class="opacity-90 font-label-md" id="dash-exam-type">Examen : BAC</p>
+                    </div>
+                    <div class="bg-white/20 px-4 py-2 rounded-lg font-black text-xl">ADMIS(E)</div>
+                </div>
+                <div class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm italic text-on-surface-variant">
+                    Les relevés officiels seront disponibles au retrait physique sous 15 jours.
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const candidate = JSON.parse(sessionStorage.getItem('candidateDetails') || '{}');
+        if (sessionStorage.getItem('isLoggedIn') !== 'true') window.location.href = 'Connexion.html';
+
+        if (candidate.name) {
+            document.getElementById('dash-name').textContent = candidate.name;
+            document.getElementById('dash-matricule').textContent = "Matricule : " + (candidate.matricule || 'N/A');
+            document.getElementById('dash-cnib').textContent = candidate.cnib || 'N/A';
+            document.getElementById('dash-birth').textContent = candidate.birthDate || 'N/A';
+            document.getElementById('dash-phone').textContent = candidate.phone || 'N/A';
+            document.getElementById('user-initials-large').textContent = candidate.name.charAt(0).toUpperCase();
+
+            if (sessionStorage.getItem('selectedExam')) {
+                document.getElementById('results-placeholder').classList.add('hidden');
+                document.getElementById('dashboard-results').classList.remove('hidden');
+                document.getElementById('dash-exam-type').textContent = "Examen : " + sessionStorage.getItem('selectedExam');
+            }
+        }
+    });
+</script>
+</body></html>

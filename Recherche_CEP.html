@@ -1,0 +1,109 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Recherche Résultats CEP - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#006b2f",
+                    "secondary": "#bb0014",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00873d",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter overflow-hidden">
+<div class="absolute inset-0 faso-dan-fani-bg pointer-events-none"></div>
+<div class="relative z-10 w-full max-w-4xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Résultats CEP</h1>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Consultez votre résultat au Certificat d'Études Primaires.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl">
+        <form id="cepForm" class="space-y-md">
+            <div class="space-y-xs">
+                <label class="block font-label-md text-on-surface">N° de Table</label>
+                <div class="relative">
+                    <input type="text" id="pv_number" class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline" placeholder="Ex: 12345" required>
+                    <span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant" data-icon="fingerprint">fingerprint</span>
+                </div>
+            </div>
+            <p class="text-error text-label-sm mt-xs hidden" id="pv_number_error">Veuillez saisir votre numéro de table.</p>
+            <div class="space-y-xs">
+                <label class="block font-label-md text-on-surface" for="cnib_number">N° CNIB (Parent ou Tuteur)</label>
+                <div class="relative">
+                    <input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline" id="cnib_number" placeholder="Ex: B1234567" type="text" required="">
+                    <span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant" data-icon="badge">badge</span>
+                </div>
+                <p class="text-error text-label-sm mt-xs hidden" id="cnib_number_error">Veuillez saisir le numéro CNIB du parent ou tuteur.</p>
+            </div>
+            <div class="space-y-xs">
+                <label class="block font-label-md text-on-surface" for="year">Année de Session</label>
+                <div class="relative">
+                    <select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" id="year">
+                        <option value="2024" disabled>Session 2024 (Non disponible)</option>
+                        <option value="2025" selected>Session 2025</option>
+                        <option value="2026" disabled>Session 2026 (À venir)</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-4 top-3 pointer-events-none text-on-surface-variant" data-icon="calendar_today">calendar_today</span>
+                </div>
+            </div>
+            <button class="w-full h-12 bg-primary text-on-primary font-label-md rounded-lg hover:bg-primary-container transition-all active:scale-[0.98] flex items-center justify-center gap-sm" id="submit-btn" type="submit">
+                <span class="material-symbols-outlined" id="submit-icon">search</span>
+                <span id="btn-text">Consulter le résultat</span>
+            </button>
+        </form>
+    </div>
+</div>
+</main>
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+<script src="components.js"></script>
+<script>
+        document.getElementById('cepForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pv = document.getElementById('pv_number').value;
+            sessionStorage.setItem('selectedExam', 'CEP');
+            sessionStorage.setItem('simulatedMatricule', pv);
+            sessionStorage.setItem('quickCheck', 'true');
+            window.location.href = 'Resultat_CEP.html';
+        });
+    </script>
+    <script src="script.js"></script>
+</body></html>

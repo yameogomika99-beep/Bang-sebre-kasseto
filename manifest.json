@@ -1,0 +1,23 @@
+{
+  "name": "Bângr-sebre kaseto",
+  "short_name": "BS Kaseto",
+  "description": "Portail officiel de consultation des résultats aux examens nationaux au Burkina Faso.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fcf9f8",
+  "theme_color": "#009739",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/8.x/initials/svg?seed=BK&backgroundColor=009739",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://api.dicebear.com/8.x/initials/svg?seed=BK&backgroundColor=009739",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

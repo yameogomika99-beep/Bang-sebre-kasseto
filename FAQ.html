@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FAQ et Assistance - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary": "#006b2f",
+                "background": "#fcf9f8",
+                "on-surface-variant": "#3e4a3e",
+                "tertiary-container": "#cca800",
+                "secondary": "#bb0014",
+                "on-primary": "#ffffff",
+                "outline-variant": "#bdcaba",
+                "on-primary-container": "#f7fff3",
+                "tertiary": "#715c00",
+                "surface-container-lowest": "#ffffff",
+                "secondary-container": "#e32126",
+                "on-surface": "#1c1b1b",
+                "surface-container-highest": "#e5e2e1",
+                "primary-container": "#00873d",
+                "surface-container-low": "#f6f3f2",
+                "surface": "#fcf9f8", /* Added for consistency with nav background */
+                "surface-container": "#f0eded", /* Added for consistency with institutional info card */
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "lg": "40px",
+                "gutter": "20px",
+                "container-max": "1200px",
+                "xs": "8px",
+                "md": "24px",
+                "xl": "64px",
+                "sm": "16px",
+                "base": "4px"
+            },
+            "fontFamily": {
+                "sans": ["Inter", "sans-serif"] /* Simplified to a single font family */
+            },
+            "fontSize": {
+                "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+            }
+          },
+        },
+      }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative py-xl bg-surface-container-low border-b border-outline-variant overflow-hidden">
+<div class="absolute inset-0 bg-fano-pattern"></div>
+<div class="relative max-w-container-max mx-auto px-sm md:px-gutter text-center">
+<h1 class="text-headline-lg md:text-display-lg text-on-surface mb-sm">Centre d'Assistance</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                    Retrouvez ici toutes les réponses à vos questions concernant les examens nationaux et les concours de la fonction publique.
+                </p>
+<div class="mt-lg max-w-xl mx-auto relative">
+<input class="w-full h-14 pl-12 pr-4 bg-white border border-outline rounded-xl shadow-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Rechercher une question ou un mot-clé..." type="text">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+</div>
+</div>
+</section>
+<!-- Main Content: Bento Grid Layout -->
+<div class="max-w-container-max mx-auto px-sm md:px-gutter py-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg items-start">
+<!-- FAQ Section -->
+<div class="lg:col-span-8 space-y-lg">
+<!-- Category: Résultats -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Résultats d'examens</h2>
+</div>
+<div class="space-y-base">
+<!-- Accordion Item 1 -->
+<div class="accordion-item border border-surface-container-highest rounded-lg overflow-hidden transition-all duration-200">
+<button class="w-full flex justify-between items-center p-sm text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-md text-on-surface">Comment consulter mes résultats en ligne ?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content bg-white">
+<div class="p-sm pt-0 font-body-md text-on-surface-variant border-t border-surface-container-highest">
+                                        Pour consulter vos résultats, munissez-vous de votre numéro de table ou de votre matricule. Rendez-vous sur l'onglet "Résultats", sélectionnez votre examen et la session correspondante, puis validez.
+                                    </div>
+</div>
+</div>
+<!-- Accordion Item 2 -->
+<div class="accordion-item border border-surface-container-highest rounded-lg overflow-hidden transition-all duration-200">
+<button class="w-full flex justify-between items-center p-sm text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-md text-on-surface">Quand seront publiés les résultats du BAC 2024 ?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform duration-300" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content bg-white">
+<div class="p-sm pt-0 font-body-md text-on-surface-variant border-t border-surface-container-highest">
+                                        Le calendrier officiel de publication des résultats est défini par la Direction des Examens et Concours. Généralement, les résultats sont disponibles 15 à 20 jours après la fin des épreuves.
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Category: Inscriptions -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="app_registration">app_registration</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Inscriptions &amp; Dossiers</h2>
+</div>
+<div class="space-y-base">
+<div class="accordion-item border border-surface-container-highest rounded-lg overflow-hidden transition-all">
+<button class="w-full flex justify-between items-center p-sm text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-md text-on-surface">Quelles sont les pièces à fournir pour le BEPC ?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content bg-white">
+<div class="p-sm pt-0 font-body-md text-on-surface-variant">
+                                        Le dossier comprend : un extrait d'acte de naissance, un certificat de scolarité de la classe de 3ème, et la quittance de paiement des frais d'examen.
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Category: Technique -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="settings">settings</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Assistance Technique</h2>
+</div>
+<div class="space-y-base">
+<div class="accordion-item border border-surface-container-highest rounded-lg overflow-hidden transition-all">
+<button class="w-full flex justify-between items-center p-sm text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-md text-on-surface">Je n'arrive pas à télécharger mon attestation.</span>
+<span class="material-symbols-outlined chevron-icon transition-transform" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content bg-white">
+<div class="p-sm pt-0 font-body-md text-on-surface-variant">
+                                        Assurez-vous d'utiliser un navigateur à jour (Chrome, Firefox ou Safari). Si le problème persiste, videz le cache de votre navigateur ou essayez sur un autre appareil.
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact & Sidebar Section -->
+<aside class="lg:col-span-4 space-y-lg">
+<!-- Direct Contact Form -->
+<div class="bg-primary text-on-primary rounded-xl p-md shadow-lg">
+<h3 class="font-headline-md text-headline-md mb-xs">Nous Contacter</h3>
+<p class="font-body-md text-on-primary/80 mb-md">Une question spécifique ? Envoyez-nous un message directement.</p>
+<form class="space-y-sm">
+<div>
+<label class="block font-label-sm mb-base opacity-90">Nom complet</label>
+<input class="w-full bg-white/10 border border-white/20 rounded-lg p-sm text-white placeholder-white/50 focus:bg-white/20 focus:ring-1 focus:ring-white outline-none" type="text">
+</div>
+<div>
+<label class="block font-label-sm mb-base opacity-90">Email</label>
+<input class="w-full bg-white/10 border border-white/20 rounded-lg p-sm text-white placeholder-white/50 focus:bg-white/20 focus:ring-1 focus:ring-white outline-none" type="email">
+</div>
+<div>
+<label class="block font-label-sm mb-base opacity-90">Sujet</label>
+<select class="w-full bg-white/10 border border-white/20 rounded-lg p-sm text-white focus:bg-white/20 focus:ring-1 focus:ring-white outline-none">
+<option class="text-on-surface">Problème technique</option>
+<option class="text-on-surface">Demande d'information</option>
+<option class="text-on-surface">Réclamation résultat</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm mb-base opacity-90">Message</label>
+<textarea class="w-full bg-white/10 border border-white/20 rounded-lg p-sm text-white placeholder-white/50 focus:bg-white/20 focus:ring-1 focus:ring-white outline-none" rows="4"></textarea>
+</div>
+<button class="w-full h-12 bg-white text-primary font-label-md rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center gap-xs" type="button">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+                                Envoyer le message
+                            </button>
+<button class="w-full h-12 mt-sm border border-white/20 bg-white/5 backdrop-blur-sm text-white font-label-md rounded-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-xs" type="button" onclick="window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent('Une question sur les examens au Burkina ? Consultez le centre d\'aide officiel : ' + window.location.href), '_blank')">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.353-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.148-.471-1.138-.646-1.562-.17-.411-.344-.355-.471-.355-.121 0-.26-.011-.401-.011-.141 0-.371.053-.564.26-.193.207-.738.721-.738 1.758 0 1.037.754 2.038.858 2.177.104.139 1.483 2.266 3.593 3.178.502.217.892.347 1.197.443.504.161.964.138 1.327.085.405-.059 1.246-.511 1.421-1.004.175-.493.175-.916.123-.1 .052-.053.226-.148.527-.297zM12 2.163c-5.429 0-9.837 4.408-9.837 9.837 0 1.734.451 3.42 1.309 4.908l-1.391 5.084 5.2-.1.365-1.365 4.318 4.318c1.423.821 3.037 1.253 4.697 1.253 5.429 0 9.837-4.408 9.837-9.837s-4.408-9.837-9.837-9.837zm0 18.01c-1.54 0-3.05-.395-4.37-1.144l-.313-.18-3.245.851.866-3.164-.198-.315c-.822-1.311-1.256-2.825-1.256-4.38 0-4.509 3.668-8.174 8.175-8.174 4.507 0 8.175 3.665 8.175 8.174 0 4.51-3.668 8.174-8.175 8.174z"/></svg>
+                                Partager via WhatsApp
+                            </button>
+</form>
+</div>
+</aside>
+</div>
+
+<!-- Institutional Info Section (Horizontal Layout) -->
+<div class="mt-xl bg-surface-container rounded-2xl border border-outline-variant overflow-hidden">
+    <div class="p-md lg:p-lg">
+        <h3 class="font-label-md text-on-surface-variant uppercase tracking-wider mb-lg">Informations Institutionnelles</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-md lg:gap-lg">
+            <div class="flex gap-sm">
+                <span class="material-symbols-outlined text-primary">location_on</span>
+                <div>
+                    <p class="font-label-md text-on-surface">Direction des Examens et Concours</p>
+                    <p class="font-body-md text-on-surface-variant">Avenue de l'Indépendance, Ouagadougou 01</p>
+                </div>
+            </div>
+            <div class="flex gap-sm">
+                <span class="material-symbols-outlined text-primary">call</span>
+                <div>
+                    <p class="font-label-md text-on-surface">Numéro Vert (Appel Gratuit)</p>
+                    <p class="font-body-md text-on-surface-variant">80 00 11 00</p>
+                </div>
+            </div>
+            <div class="flex gap-sm">
+                <span class="material-symbols-outlined text-primary">schedule</span>
+                <div>
+                    <p class="font-label-md text-on-surface">Horaires d'ouverture</p>
+                    <p class="font-body-md text-on-surface-variant">Lun - Ven: 07:30 - 16:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relative h-64 md:h-80 lg:h-96">
+        <img alt="Direction des Examens" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_oEPTvFFD6Ka3EBh_TH-ub9Ze4sTSiYiFqWiybDxdry7MFBp-Qf7ZzvZnrYYfBwakxzNqI3voOL1n80W72iCbwSkrq_d-fAKH4Tufj3U7dyyvnO9Qo2rZAeW5BNGrIlBRW55gGd67-1tKOVG9GaVm_TaMGTRNoyWa-5gKpfd-ndBCzg8Pr95EzczGq5mNEWgAYv6-lRUXSTtA6p3qQu_F27JUa93JF4u7IPWpS7zyBPcSisiABWX719r8RK7peMYG2FWkgz_9T7U">
+        <div class="absolute bottom-0 inset-x-0 bg-black/50 backdrop-blur-md p-4 text-center">
+            <p class="font-label-sm text-white font-bold tracking-widest uppercase">Siège de la DEC — Ouagadougou</p>
+        </div>
+    </div>
+</div>
+</div>
+</main>
+<footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 bg-surface border-t border-outline-variant md:hidden">
+    <!-- Injecté par components.js -->
+</nav>
+<script src="components.js"></script>
+<script>
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all other items
+            document.querySelectorAll('.accordion-item').forEach(accItem => {
+                accItem.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Initialize micro-interactions
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.classList.add('scale-[1.01]');
+            });
+            el.addEventListener('blur', () => {
+                el.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+    </script>
+</body></html>

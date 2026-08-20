@@ -1,0 +1,105 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Mes Paramètres - e-Examens Burkina</title>
+<script src="global-tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header></header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter">
+<div class="relative z-10 w-full max-w-2xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Mes Paramètres</h1>
+<p class="text-on-surface-variant mx-auto font-body-md">Mettez à jour vos informations de contact pour rester informé de l'évolution de vos dossiers.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl">
+<form class="space-y-md" id="settingsForm">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="email">Adresse Email</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none transition-all" id="email" placeholder="candidat@exemple.com" type="email" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">mail</span>
+</div>
+<p id="email-error" class="text-error text-label-sm mt-xs hidden">Veuillez saisir une adresse email valide.</p>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="phone">N° de Téléphone</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none transition-all" id="phone" placeholder="70 00 00 00" type="tel" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">call</span>
+</div>
+<p id="phone-error" class="text-error text-label-sm mt-xs hidden">Le numéro de téléphone doit contenir exactement 8 chiffres.</p>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="address">Adresse de résidence</label>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border border-outline rounded-lg px-sm pl-12 py-3 focus:ring-2 focus:ring-primary outline-none transition-all" id="address" placeholder="Quartier, Secteur, Ville" rows="3"></textarea>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">location_on</span>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-sm mt-md" type="submit">
+<span class="material-symbols-outlined">save</span>
+                    Enregistrer les modifications
+</button>
+</form>
+</div>
+</div>
+</main>
+<footer></footer>
+<nav class="fixed bottom-0 w-full z-50 md:hidden"></nav>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script>
+    document.getElementById('settingsForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const emailError = document.getElementById('email-error');
+        const phoneError = document.getElementById('phone-error');
+        
+        let isValid = true;
+
+        // Validation de l'email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value)) {
+            emailInput.classList.add('border-error');
+            emailError.classList.remove('hidden');
+            isValid = false;
+        } else {
+            emailInput.classList.remove('border-error');
+            emailError.classList.add('hidden');
+        }
+
+        // Validation du téléphone (8 chiffres pour le Burkina Faso)
+        const cleanedPhone = phoneInput.value.replace(/\s/g, ''); 
+        if (!/^\d{8}$/.test(cleanedPhone)) {
+            phoneInput.classList.add('border-error');
+            phoneError.classList.remove('hidden');
+            isValid = false;
+        } else {
+            phoneInput.classList.remove('border-error');
+            phoneError.classList.add('hidden');
+        }
+
+        if (!isValid) { return; }
+
+        const btn = this.querySelector('button[type="submit"]');
+        const originalContent = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Enregistrement...`;
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+            alert('Vos paramètres ont été mis à jour avec succès.');
+        }, 1000);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) { window.location.href = 'Connexion.html'; return; }
+    });
+</script>
+</body></html>

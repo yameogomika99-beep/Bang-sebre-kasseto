@@ -1,0 +1,220 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Recherche de Résultats - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#009739",
+                    "surface": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "on-surface-variant": "#3e4a3e",
+                    "tertiary-container": "#cca800",
+                    "secondary": "#ef2b2d",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#bdcaba",
+                    "on-primary-container": "#f7fff3",
+                    "tertiary": "#715c00",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#e32126",
+                    "on-surface": "#1c1b1b",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#00ad43",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container": "#f0eded",
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "sans": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<!-- Main Content Area -->
+<main class="flex-grow relative overflow-hidden flex items-center justify-center py-xl">
+<!-- Background Pattern -->
+<div class="absolute inset-0 faso-dan-fani-bg pointer-events-none"></div>
+<div class="relative z-10 w-full max-w-4xl px-gutter mx-auto">
+<!-- Hero Title -->
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Recherche de Résultats d'Examens</h1>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Accédez en toute sécurité à vos résultats officiels en saisissant vos informations de candidat ci-dessous.</p>
+</div>
+<!-- Search Form Container -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl card-shadow p-lg md:p-xl">
+<form class="space-y-md" id="searchForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Exam Selection -->
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="exam">Type d'Examen</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" id="exam">
+<option disabled="" selected="" value="">Sélectionnez l'examen</option>
+<option value="CEP">CEP (Certificat d'Études Primaires)</option>
+<option value="BEPC">BEPC (Brevet d'Études du Premier Cycle)</option>
+<option value="BAC">BAC (Baccalauréat)</option>
+<option value="CONCOURS">Concours de la Fonction Publique</option>
+<option value="BAC_TECH">BAC Technique (Baccalauréat Technique)</option></select>
+<span class="material-symbols-outlined absolute right-4 top-3 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Year Selection -->
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="year">Année de Session</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm appearance-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" id="year">
+<option value="2024" disabled>Session 2024 (Non disponible)</option>
+<option value="2025" selected>Session 2025</option>
+<option value="2026" disabled>Session 2026 (À venir)</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-3 pointer-events-none text-on-surface-variant" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+</div>
+<!-- PV Number Input -->
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="pv_number">N° de Table ou Matricule</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline" id="pv_number" placeholder="Ex: 00012345Z" type="text">
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant" data-icon="fingerprint">fingerprint</span>
+</div>
+<p class="text-label-sm text-on-surface-variant flex items-center gap-base">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+                            Le numéro se trouve sur votre convocation officielle.
+                        </p>
+</div>
+<!-- Submit Button -->
+<div class="pt-base">
+<button class="w-full h-12 bg-primary text-on-primary font-label-md rounded-lg hover:bg-primary-container transition-all active:scale-[0.98] flex items-center justify-center gap-sm" type="submit">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+                            Consulter mon résultat
+                        </button>
+</div>
+</form>
+<!-- Security & Privacy Badges -->
+<div class="mt-lg pt-lg border-t border-surface-container-highest flex flex-col md:flex-row items-center justify-between gap-sm">
+<div class="flex items-center gap-sm text-on-surface-variant opacity-80">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="text-label-sm">Données certifiées par le MENAPLN</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant opacity-80">
+<span class="material-symbols-outlined text-primary" data-icon="lock" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-label-sm">Connexion sécurisée SSL</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant opacity-80">
+<span class="material-symbols-outlined text-primary" data-icon="visibility_off" data-weight="fill" style="font-variation-settings: 'FILL' 1;">visibility_off</span>
+<span class="text-label-sm">Confidentialité garantie</span>
+</div>
+</div>
+</div>
+<!-- Helpful Information Cards (Asymmetric Bento Lite) -->
+<div class="mt-lg grid grid-cols-1 md:grid-cols-3 gap-sm">
+<div class="md:col-span-2 bg-surface-container border border-outline-variant rounded-xl p-md flex items-start gap-md">
+<div class="bg-primary-container/20 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="help_center">help_center</span>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface">Un problème technique ?</h3>
+<p class="text-label-sm text-on-surface-variant">En cas de difficulté de consultation, contactez le support technique au +226 25 30 00 00 ou par email à support@examens.bf</p>
+</div>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-xl p-md flex items-start gap-md">
+<div class="bg-secondary-container/20 p-sm rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="warning">warning</span>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface">Avis Important</h3>
+<p class="text-label-sm text-on-surface-variant">Seuls les résultats du premier tour sont disponibles pour le moment.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+<!-- BottomNavBar (Hidden on desktop, logic as per requirements) -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm">
+    <!-- Injecté par components.js -->
+</nav>
+<script src="components.js"></script>
+<script>
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const exam = document.getElementById('exam').value;
+            const pv = document.getElementById('pv_number').value;
+
+            if (!exam) { alert('Veuillez sélectionner un type d\'examen.'); return; }
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="sync">sync</span> Recherche en cours...`;
+            
+            setTimeout(() => {
+                sessionStorage.setItem('selectedExam', exam);
+                sessionStorage.setItem('simulatedMatricule', pv);
+                sessionStorage.setItem('quickCheck', 'true');
+
+                const pageMap = {
+                    'CEP': 'Resultat_CEP.html',
+                    'BEPC': 'Resultat_BEPC.html',
+                    'BAC': 'Resultat_BAC.html',
+                    'BAC_TECH': 'Resultat_BAC.html',
+                    'CONCOURS': 'Resultat_CONCOURS.html'
+                };
+
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+                window.location.href = pageMap[exam] || 'Resultat.html';
+            }, 800);
+        });
+
+        // Simple input focus effects
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.closest('div').classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.closest('div').classList.remove('scale-[1.01]');
+            });
+        });
+    </script>
+
+
+</body></html>

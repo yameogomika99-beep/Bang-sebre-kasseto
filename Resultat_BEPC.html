@@ -1,0 +1,251 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Résultat BEPC 2025 - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<div class="watermark-print"><span>PROVISOIRE</span></div>
+<div class="matricule-watermark-print"><span id="footer-matricule"></span></div>
+
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+
+<main class="flex-grow max-w-container-max mx-auto w-full px-4 md:px-gutter py-lg">
+    <section class="mb-lg animate-fade-in no-print">
+        <div class="bg-primary-container text-on-primary-container p-md md:p-lg rounded-2xl flex flex-col md:flex-row items-center gap-md shadow-glass border border-primary/20">
+            <div class="bg-white/20 p-sm rounded-full">
+                <span class="material-symbols-outlined text-4xl" id="status-icon">sync</span>
+            </div>
+            <div class="flex-grow">
+                <h2 class="font-headline-lg text-headline-lg" id="status-text">CHARGEMENT...</h2>
+                <p class="font-body-md opacity-90" id="session-label">Session en cours de récupération</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="result-content" class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+        <!-- Sidebar Candidat -->
+        <aside class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm h-fit">
+            <div class="flex flex-col items-center mb-md pb-md border-b border-outline-variant">
+                <img id="cand-photo" src="https://api.dicebear.com/8.x/initials/svg?seed=Candidat" class="w-32 h-32 rounded-lg object-cover border-2 border-primary mb-sm shadow-md" alt="Photo Candidat">
+                <h2 id="cand-name" class="font-headline-md text-primary text-center"></h2>
+                <p id="cand-matricule" class="text-on-surface-variant font-label-md"></p>
+            </div>
+            <div class="space-y-sm text-body-md">
+                <div class="flex justify-between"><span>Date de naissance :</span><span id="cand-birthdate" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Lieu de naissance :</span><span id="cand-place" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Établissement :</span><span id="cand-school" class="font-bold"></span></div>
+                <div class="flex justify-between"><span>Mention :</span><span id="cand-mention" class="font-bold"></span></div>
+            </div>
+            <button id="print-btn" class="no-print w-full mt-lg bg-primary text-on-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary-container transition-all duration-200">
+                <span class="material-symbols-outlined">print</span> Imprimer le Relevé
+            </button>
+            <button id="download-pdf-btn" class="no-print w-full mt-sm border border-primary text-primary py-3 rounded-lg flex items-center justify-center gap-base hover:bg-primary/5 transition-all">
+                <span class="material-symbols-outlined">download</span> Télécharger en PDF
+            </button>
+        </aside>
+
+        <!-- Relevé de notes -->
+        <div class="lg:col-span-8 space-y-md" id="detailed-results-section">
+            <div class="bg-primary/5 border border-primary/20 p-md rounded-xl section-header-print">
+                <h1 class="text-headline-md font-bold text-primary flex items-center gap-sm">
+                    <span class="material-symbols-outlined">school</span> <span id="exam-title-display"></span> - <span id="session-year-display"></span>
+                </h1>
+                <div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label-sm font-bold" id="overall-avg"></div>
+            </div>
+            
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-surface-container-low">
+                        <tr>
+                            <th class="px-md py-sm border-b border-outline-variant uppercase text-label-sm">Matière</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-center uppercase text-label-sm">Coeff</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-center uppercase text-label-sm">Note /20</th>
+                            <th class="px-md py-sm border-b border-outline-variant text-right uppercase text-label-sm">Pondérée</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notes-body" class="divide-y divide-outline-variant"></tbody>
+                    <tfoot class="bg-primary/10 font-bold">
+                        <tr>
+                            <td class="px-md py-md">TOTAL GÉNÉRAL</td>
+                            <td class="text-center" id="total-coeff"></td>
+                            <td class="text-center">--</td>
+                            <td class="px-md py-md text-right text-primary text-lg" id="total-points"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="text-center p-md bg-secondary/5 border border-secondary/10 rounded-xl">
+                <p class="text-label-sm text-on-surface-variant italic">Document provisoire. Seul le diplôme officiel fait foi.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+
+<script src="script.js"></script>
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const matricule = sessionStorage.getItem('simulatedMatricule') || "PV-BEPC-12345";
+
+        // Simulation de données robustes pour le BEPC
+        const bepcData = {
+            name: "SAWADOGO Wendkouni Inès",
+            matricule: matricule,
+            birthdate: "12 Septembre 2009",
+            place: "Koudougou (Boulkiemdé)",
+            school: "Lycée Provincial Mollo Sanou",
+            mention: "ASSEZ BIEN",
+            avg: "13.42",
+            subjects: [
+                { name: "Français", coeff: 3, note: 12.5, total: 37.5 },
+                { name: "Mathématiques", coeff: 3, note: 14, total: 42 },
+                { name: "SVT", coeff: 2, note: 13, total: 26 },
+                { name: "Physique-Chimie", coeff: 2, note: 15, total: 30 },
+                { name: "Anglais", coeff: 2, note: 11, total: 22 },
+                { name: "Histoire-Géo", coeff: 2, note: 13.5, total: 27 },
+                { name: "EPS", coeff: 1, note: 18, total: 18 }
+            ],
+            totalPoints: 202.5,
+            totalCoeff: 15,
+            maxPoints: 300
+        };
+
+        // Mise à jour de l'UI
+        document.getElementById('status-text').textContent = "ADMIS(E)";
+        document.getElementById('status-icon').textContent = "check_circle";
+        document.getElementById('session-label').textContent = "Session Normale - BEPC 2025";
+
+        document.getElementById('cand-name').textContent = bepcData.name;
+        document.getElementById('cand-matricule').textContent = bepcData.matricule;
+        document.getElementById('cand-birthdate').textContent = bepcData.birthdate;
+        document.getElementById('cand-place').textContent = bepcData.place;
+        document.getElementById('cand-school').textContent = bepcData.school;
+        document.getElementById('cand-mention').textContent = bepcData.mention;
+        document.getElementById('exam-title-display').textContent = "BEPC";
+        document.getElementById('session-year-display').textContent = "2025";
+        document.getElementById('overall-avg').textContent = "MOYENNE : " + bepcData.avg + "/20";
+
+        const notesBody = document.getElementById('notes-body');
+        notesBody.innerHTML = bepcData.subjects.map(s => `
+            <tr class="hover:bg-surface-container-lowest transition-colors">
+                <td class="px-md py-md font-label-md">${s.name}</td>
+                <td class="px-md py-md text-center">${s.coeff}</td>
+                <td class="px-md py-md text-center">${s.note.toFixed(2)}</td>
+                <td class="px-md py-md text-right font-bold">${s.total.toFixed(2)}</td>
+            </tr>
+        `).join('');
+
+        document.getElementById('total-coeff').textContent = bepcData.totalCoeff;
+        document.getElementById('total-points').textContent = bepcData.totalPoints.toFixed(2);
+        document.getElementById('footer-matricule').textContent = bepcData.matricule;
+        document.getElementById('cand-photo').src = `https://api.dicebear.com/8.x/initials/svg?seed=${bepcData.name}`;
+
+        // Initialisation du Radar Chart
+        const radarCanvas = document.getElementById('radarChart');
+        if (radarCanvas) {
+            new Chart(radarCanvas, {
+                type: 'radar',
+                data: {
+                    labels: bepcData.subjects.map(s => s.name),
+                    datasets: [{
+                        data: bepcData.subjects.map(s => s.note),
+                        backgroundColor: 'rgba(0, 151, 57, 0.1)',
+                        borderColor: '#009739',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#009739'
+                    }]
+                },
+                options: {
+                    scales: { r: { suggestedMin: 0, suggestedMax: 20, ticks: { display: false } } },
+                    plugins: { legend: { display: false } },
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Logique Impression et PDF
+        document.getElementById('print-btn').addEventListener('click', () => window.print());
+        document.getElementById('download-pdf-btn').addEventListener('click', () => {
+            const element = document.querySelector('main');
+            const opt = {
+                margin: 10,
+                filename: `BEPC_2025_${bepcData.matricule}.pdf`,
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        });
+    });
+</script>
+<button id="back-to-top" class="fixed bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible z-50 hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
+    <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<script>
+    // Logic pour le bouton Retour en haut
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+</body></html>

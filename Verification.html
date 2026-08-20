@@ -1,0 +1,138 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Vérification de Diplômes - Bângr-sebre kaseto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#009739",
+                    "secondary": "#ef2b2d",
+                    "background": "#fcf9f8",
+                    "on-surface": "#1c1b1b",
+                    "on-surface-variant": "#3e4a3e",
+                    "outline-variant": "#bdcaba",
+                    "surface-container-low": "#f6f3f2",
+                    "surface-container-highest": "#e5e2e1",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#00ad43",
+                    "on-primary": "#ffffff",
+                    "on-primary-container": "#f7fff3"
+                },
+                spacing: {
+                    "lg": "40px",
+                    "gutter": "20px",
+                    "container-max": "1200px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "sm": "16px",
+                    "base": "4px"
+                },
+                fontSize: {
+                    "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                    "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                    "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                    "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                }
+            }
+        }
+    }
+</script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20">
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow relative flex items-center justify-center py-xl px-4 md:px-gutter">
+<div class="relative z-10 w-full max-w-4xl px-gutter mx-auto">
+<div class="text-center mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Portail de Vérification Tiers</h1>
+<p class="text-on-surface-variant max-w-2xl mx-auto font-body-md">Authentification sécurisée des diplômes et attestations pour les employeurs et institutions académiques.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-lg p-lg md:p-xl">
+<form class="space-y-md" id="verifyForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="exam">Examen à vérifier</label>
+<select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm focus:ring-2 focus:ring-primary outline-none" id="exam" required>
+<option value="" disabled="" selected="">Sélectionnez l'examen</option>
+<option value="CEP">CEP</option>
+<option value="BEPC">BEPC</option>
+<option value="BAC">BAC</option>
+<option value="LICENCE">Licence</option>
+<option value="MASTER">Master</option>
+<option value="DOCTORAT">Doctorat</option>
+</select>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="year">Année de Session</label>
+<select class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm focus:ring-2 focus:ring-primary outline-none" id="year">
+<option value="2024" disabled>2024 (Non disponible)</option>
+<option value="2025" selected>2025</option>
+<option value="2026" disabled>2026 (À venir)</option>
+</select>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="pv_number">Matricule ou N° de Table du Candidat</label>
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm focus:ring-2 focus:ring-primary outline-none" id="pv_number" placeholder="Ex: 12345678X" type="text" required>
+</div>
+<div class="space-y-xs">
+<label class="block font-label-md text-on-surface" for="verify_code">Code de Vérification Unique (CVU)</label>
+<div class="relative">
+<input class="w-full h-12 bg-surface-container-low border border-outline rounded-lg px-sm pl-12 focus:ring-2 focus:ring-primary outline-none" id="verify_code" placeholder="Ex: CVU-2024-XXXX" type="text" required>
+<span class="material-symbols-outlined absolute left-4 top-3 text-on-surface-variant">qr_code_scanner</span>
+</div>
+<p class="text-label-sm text-on-surface-variant italic">Le code CVU figure sur l'attestation originale présentée par le candidat.</p>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container transition-all flex items-center justify-center gap-sm mt-md" type="submit">
+<span class="material-symbols-outlined">verified</span>
+                    Authentifier le Document
+</button>
+</form>
+<div class="mt-lg pt-lg border-t border-surface-container-highest grid grid-cols-1 md:grid-cols-3 gap-sm opacity-70">
+<div class="flex items-center gap-xs text-label-sm"><span class="material-symbols-outlined text-primary">gavel</span> Valeur Légale</div>
+<div class="flex items-center gap-xs text-label-sm"><span class="material-symbols-outlined text-primary">history_edu</span> Signature Numérique</div>
+<div class="flex items-center gap-xs text-label-sm"><span class="material-symbols-outlined text-primary">security</span> Anti-Falsification</div>
+</div>
+</div>
+</div>
+</main>
+    <footer class="w-full bg-surface-container-low border-t border-surface-container-highest pt-xl pb-md"></footer>
+
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm"></nav>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('verifyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const exam = document.getElementById('exam').value;
+            const year = document.getElementById('year').value;
+            const pv = document.getElementById('pv_number').value;
+            const cvu = document.getElementById('verify_code').value;
+
+            if (!exam) {
+                if (typeof showToast === 'function') showToast("Veuillez sélectionner un examen.");
+                return;
+            }
+
+            sessionStorage.setItem('verifiedMatricule', pv);
+            sessionStorage.setItem('verifiedExam', exam);
+            sessionStorage.setItem('verifiedYear', year);
+            sessionStorage.setItem('verifiedCVU', cvu);
+            
+            // Simuler une vérification réussie sauf si le matricule contient "FAIL"
+            sessionStorage.setItem('verificationStatus', pv.includes('FAIL') ? 'failed' : 'success');
+
+            window.location.href = 'VerificationResult.html';
+        });
+    });
+</script>
+</body></html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html><html class="light" lang="fr"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#009739",
+                        "secondary": "#ef2b2d",
+                        "background": "#fcf9f8",
+                        "on-surface": "#1c1b1b",
+                        "on-surface-variant": "#3e4a3e",
+                        "outline-variant": "#bdcaba",
+                        "surface-container-low": "#f6f3f2",
+                        "surface-container-highest": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#00ad43",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#f7fff3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "gutter": "20px",
+                        "container-max": "1200px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "xl": "64px",
+                        "sm": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- Subtle Background Pattern -->
+<div class="fixed inset-0 faso-pattern pointer-events-none z-0"></div>
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-background border-b border-surface-container-highest transition-colors duration-200"></header>
+<main class="flex-grow max-w-container-max mx-auto w-full px-sm md:px-gutter py-lg z-10">
+<!-- Result Banner -->
+<section class="mb-lg animate-fade-in">
+<div class="bg-primary-container text-on-primary-container p-md rounded-xl flex flex-col md:flex-row items-center gap-md shadow-sm border border-primary/20">
+<div class="bg-white/20 p-sm rounded-full">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="text-center md:text-left flex-grow">
+<h2 class="font-headline-lg text-headline-lg">FÉLICITATIONS ! ADMIS(E)</h2>
+<p class="font-body-md opacity-90">Session Normale - Baccalauréat Série D 2025</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-white text-primary font-label-md px-md py-sm rounded-lg flex items-center gap-xs hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Télécharger l'Attestation (PDF)
+                    </button>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Candidate Info Sidebar -->
+<aside class="lg:col-span-4 space-y-md">
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl shadow-sm">
+<div class="flex flex-col items-center mb-md border-b border-surface-container-highest pb-md">
+<div class="w-24 h-24 rounded-full bg-surface-container overflow-hidden mb-sm border-4 border-primary/10">
+<img alt="Candidate Photo" class="w-full h-full object-cover" data-alt="A formal professional headshot portrait of a young Burkinabé student against a soft, out-of-focus academic library background. The student wears a clean, white collared shirt, smiling confidently at the camera. The lighting is warm and natural, creating a serene and official atmosphere consistent with a government identification photo. The overall aesthetic is professional, dignified, and clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPym59vFKXSZbx9Q_ldD_mP0Sxdyp88-J74COJ-77_qjJf1Fc8D1Ak5x2rGcNBnzEwVRnhJxNkjxzH4L6pVXE_FzfAxT1pB9hUaZNP1eoh9UB1uSM5nkZZMqvAdSpOzKoWyR7z-sgsuyml9M9tWfyQWc5LXbvwkim0MbqZUk4v4Ow_RGWhwefgPa-H3qQX16Lle-qnPBJZzMtubYKOdeOCjl6VkZm4imDapvewCvNyzWSYfotAlTxvd3kXBVkTMooo1IIClQIb4BM">
+</div>
+<h3 class="font-headline-md text-headline-md text-center">ZONGO Abdoul-Aziz Kader</h3>
+<p class="text-on-surface-variant font-label-md">N° de Table : 25-0459283-A</p>
+</div>
+<div class="space-y-sm">
+<div class="flex justify-between items-center py-base">
+<span class="text-on-surface-variant text-label-sm">Date de naissance</span>
+<span class="font-label-md">14 Mai 2006</span>
+</div>
+<div class="flex justify-between items-center py-base">
+<span class="text-on-surface-variant text-label-sm">Lieu de naissance</span>
+<span class="font-label-md">Ouagadougou (Kadiogo)</span>
+</div>
+<div class="flex justify-between items-center py-base">
+<span class="text-on-surface-variant text-label-sm">Établissement</span>
+<span class="font-label-md">Lycée Mixte d'Excellence</span>
+</div>
+<div class="flex justify-between items-center py-base">
+<span class="text-on-surface-variant text-label-sm">Centre d'examen</span>
+<span class="font-label-md">Jury 112 - Ouaga</span>
+</div>
+<div class="flex justify-between items-center py-base">
+<span class="text-on-surface-variant text-label-sm">Mention</span>
+<span class="font-label-md text-primary font-bold">BIEN</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-md rounded-xl border border-outline-variant flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-primary mb-xs">verified</span>
+<p class="text-label-sm text-on-surface-variant">Résultat certifié par le Système Bângr-sebre kaseto</p>
+<div class="mt-sm bg-white p-2 rounded-lg border border-outline-variant">
+<img alt="Verification QR Code" class="w-20 h-20 grayscale opacity-80" data-alt="A clean, minimalist QR code generated for digital verification, displayed on a small square card. The QR code is sharp and black on a crisp white background. Surrounding the QR code is a very subtle, thin border and a small, official-looking government seal in faint watermark style to suggest authenticity and administrative security." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaVZ86rnjvw5S_5kUUXRcrxl02xWQGhMCwhBSpuM8Lxthlsaevq0Qvvq75nkfBUUsz8E_YqQzvxeGfhB7wSqzj0D5K-3de5omiqYB-yYr3v4UoiG0UFp_33Og6PfSoJGK7Y5YAYMMnRgVpVozp14JVdWrLpm3pqu9u6_HFtkfhl9C6UsNoi4N9-sG1ZdkbrHoBrCv5HKnzIwJx2lpmj6atmQzWs0q87yMIV6EOSYqw6lgjLCO_eblk-sSWTsSUQQKEYYD25XN_n44">
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-xs py-sm border border-primary text-primary font-label-md rounded-lg hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">search</span>
+                    Nouvelle recherche
+                </button>
+</aside>
+<!-- Detailed Results Table -->
+<div class="lg:col-span-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-md bg-surface-container-low border-b border-surface-container-highest flex justify-between items-center">
+<h4 class="font-headline-md text-headline-md flex items-center gap-xs">
+<span class="material-symbols-outlined">assignment</span>
+                            Relevé de Notes Détaillé
+                        </h4>
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full text-label-sm font-bold">
+                            MOYENNE : 14.64/20
+                        </div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-lowest">
+<tr>
+<th class="px-md py-sm text-label-sm text-on-surface-variant border-b border-outline-variant uppercase tracking-wider">Matière</th>
+<th class="px-md py-sm text-label-sm text-on-surface-variant border-b border-outline-variant uppercase tracking-wider">Coefficient</th>
+<th class="px-md py-sm text-label-sm text-on-surface-variant border-b border-outline-variant uppercase tracking-wider">Note (/20)</th>
+<th class="px-md py-sm text-label-sm text-on-surface-variant border-b border-outline-variant uppercase tracking-wider">Note Pondérée</th>
+<th class="px-md py-sm text-label-sm text-on-surface-variant border-b border-outline-variant uppercase tracking-wider text-right">Appréciation</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Philosophie</td>
+<td class="px-md py-md">2</td>
+<td class="px-md py-md">12.50</td>
+<td class="px-md py-md">25.00</td>
+<td class="px-md py-md text-right text-label-sm text-on-surface-variant">Passable</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Français (Composition)</td>
+<td class="px-md py-md">3</td>
+<td class="px-md py-md">13.00</td>
+<td class="px-md py-md">39.00</td>
+<td class="px-md py-md text-right text-label-sm text-primary">Assez Bien</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Anglais</td>
+<td class="px-md py-md">2</td>
+<td class="px-md py-md">16.00</td>
+<td class="px-md py-md">32.00</td>
+<td class="px-md py-md text-right text-label-sm text-primary font-bold">Très Bien</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Histoire-Géographie</td>
+<td class="px-md py-md">2</td>
+<td class="px-md py-md">11.00</td>
+<td class="px-md py-md">22.00</td>
+<td class="px-md py-md text-right text-label-sm text-on-surface-variant">Passable</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors bg-primary/5">
+<td class="px-md py-md font-label-md">Mathématiques</td>
+<td class="px-md py-md font-bold">5</td>
+<td class="px-md py-md font-bold">16.50</td>
+<td class="px-md py-md font-bold">82.50</td>
+<td class="px-md py-md text-right text-label-sm text-primary font-bold">Très Bien</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors bg-primary/5">
+<td class="px-md py-md font-label-md">Physique-Chimie</td>
+<td class="px-md py-md font-bold">5</td>
+<td class="px-md py-md font-bold">15.00</td>
+<td class="px-md py-md font-bold">75.00</td>
+<td class="px-md py-md text-right text-label-sm text-primary">Bien</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Sciences de la Vie et de la Terre</td>
+<td class="px-md py-md font-bold">5</td>
+<td class="px-md py-md font-bold">14.50</td>
+<td class="px-md py-md font-bold">72.50</td>
+<td class="px-md py-md text-right text-label-sm text-primary">Bien</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-md py-md font-label-md">Éducation Physique et Sportive</td>
+<td class="px-md py-md">1</td>
+<td class="px-md py-md">18.00</td>
+<td class="px-md py-md">18.00</td>
+<td class="px-md py-md text-right text-label-sm text-primary font-bold">Excellent</td>
+</tr>
+</tbody>
+<tfoot class="bg-surface-container-high">
+<tr class="font-bold">
+<td class="px-md py-md" colspan="2">TOTAL GÉNÉRAL</td>
+<td class="px-md py-md">--</td>
+<td class="px-md py-md">366.00</td>
+<td class="px-md py-md text-right">Sur 500 points (Moy: 14.64)</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<div class="mt-md flex flex-col items-center justify-center p-md bg-secondary-container/5 border border-secondary-container/10 rounded-xl relative overflow-hidden">
+<div class="absolute right-0 top-0 opacity-10">
+<span class="material-symbols-outlined text-9xl">shield_person</span>
+</div>
+<p class="text-label-sm text-center max-w-lg mb-md text-on-surface-variant">
+                        Cette attestation est délivrée à titre provisoire sous réserve des vérifications ultérieures du secrétariat des examens. 
+                        Toute falsification de ce document est passible de poursuites pénales.
+                    </p>
+<div class="flex gap-md">
+<div class="text-center">
+<p class="text-label-sm font-bold border-b border-outline mb-sm pb-base">Le Directeur des Examens</p>
+<img alt="Signature" class="h-12 mx-auto grayscale mix-blend-multiply opacity-60" data-alt="A stylized, clean handwritten signature in dark blue ink on a white textured paper background. The signature is elegant and fluid, conveying a sense of authority and personal verification. Beside the signature, a faint circular government stamp in light red ink is visible, reinforcing the official and administrative nature of the document." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7AhwY0LG0azLWURPC04gYmX_enFE5s_sPtrqAJKjhJSeRQ8jHzN0ENxxToQHpL3VvadLN0RPXZ5xLv5PZ2TUSGgkuVvOSKOqQM6lisk4RioMhd2-gl3nTEGrz2S3dx-PXF0Abgf_SH45HLm5dSpINRD9mixF_n7mS3XaWB-Xyu2DrYTmL8wNHDpdFTxmlpRvfhHqt7YLCpXUqaV_qFPqgk54P6qzA9sbK3BC5OjFWqjluQbVdOHhNyoTg1c4SDGAHJHwC4vE84XU">
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar (Mobile only) -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center h-16 md:hidden shadow-sm">
+    <a href="index.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">home</span>
+        <span class="font-label-sm text-label-sm">Accueil</span>
+    </a>
+    <a href="Recherche.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">search</span>
+        <span class="font-label-sm text-label-sm">Recherche</span>
+    </a>
+    <a href="Statistiques.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform active:scale-90">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+        <span class="font-label-sm text-label-sm">Résultats</span>
+    </a>
+    <a href="Verification.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">verified</span>
+        <span class="font-label-sm text-label-sm">Vérifier</span>
+    </a>
+    <a href="FAQ.html" class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform active:scale-90">
+        <span class="material-symbols-outlined">help_outline</span>
+        <span class="font-label-sm text-label-sm">FAQ</span>
+    </a>
+</nav>
+<footer class="w-full py-md mt-lg bg-surface-container-low border-t border-surface-container-highest"></footer>
+<script src="components.js"></script>
+<script>
+        // Micro-interaction for result card entrance
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    row.style.transition = 'all 0.3s ease-out';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 100 + (index * 50));
+            });
+        });
+    </script>
+<button id="back-to-top" class="fixed bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg transition-opacity duration-300 opacity-0 invisible z-50 hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
+    <span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<script>
+    // Logic pour le bouton Retour en haut
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+</body></html>
